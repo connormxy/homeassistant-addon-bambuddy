@@ -8,6 +8,6 @@ arch:
   - amd64
 init: false
 ports:
-  3003/tcp: 3003
+  3000/tcp: 3003
 ports_description:
-  3003/tcp: Slicer API Port (use this in Bambuddy settings)
+  3000/tcp: Slicer API Port (use this in Bambuddy settings)
