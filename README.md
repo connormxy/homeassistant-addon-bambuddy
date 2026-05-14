@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/hobbypunk90/homeassistant-addon-bambuddy/blob/main/logo.png?raw=true" alt="Bambuddy Logo" width="300">
+  <img src="https://github.com/connormxy/homeassistant-addon-bambuddy/blob/main/logo.png?raw=true" alt="Bambuddy Logo" width="300">
 </p>
 
 # Bambuddy App
