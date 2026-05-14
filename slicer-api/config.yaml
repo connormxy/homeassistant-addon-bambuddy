@@ -1,0 +1,13 @@
+name: "Bambuddy Slicer API"
+version: "1.0.0"
+slug: bambuddy_slicer_api
+description: "A headless OrcaSlicer API sidecar container for Bambuddy Auto-Slicing."
+url: "https://github.com/connormxy/homeassistant-addon-bambuddy"
+arch:
+  - aarch64
+  - amd64
+init: false
+ports:
+  3003/tcp: 3003
+ports_description:
+  3003/tcp: Slicer API Port (use this in Bambuddy settings)
