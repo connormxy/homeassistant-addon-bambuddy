@@ -24,7 +24,7 @@ ports:
 ports_description:
   8000/tcp: Web UI without Ingress
 ingress: true
-ingress_port: 8000
+ingress_port: 8099
 ingress_stream: true
 panel_icon: mdi:printer-3d
 panel_title: Bambuddy

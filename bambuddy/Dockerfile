@@ -12,7 +12,10 @@ RUN apk add --no-cache \
   build-base \
   py3-opencv \
   curl \
-  ffmpeg
+  ffmpeg \
+  nginx
+
+RUN mkdir -p /run/nginx
 
 # Install Python dependencies with cache mount
 COPY --from=builder /app/requirements.txt ./
