@@ -19,6 +19,8 @@ options:
   debug: false
 schema:
   debug: bool
+map:
+  - share:rw
 ports:
   8000/tcp: 8000
 webui: http://[HOST]:[PORT:8000]
