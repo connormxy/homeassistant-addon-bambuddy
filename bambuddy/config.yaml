@@ -20,12 +20,6 @@ options:
 schema:
   debug: bool
 ports:
-  8000/tcp: null
-ports_description:
-  8000/tcp: Web UI without Ingress
-ingress: true
-ingress_port: 8099
-ingress_stream: true
-panel_icon: mdi:printer-3d
-panel_title: Bambuddy
+  8000/tcp: 8000
+webui: http://[HOST]:[PORT:8000]
 watchdog: http://[HOST]:[PORT:8000]/health
