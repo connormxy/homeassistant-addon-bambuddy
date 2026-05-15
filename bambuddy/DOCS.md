@@ -47,6 +47,16 @@ It uses the following ports internally. **If you have other Add-ons using these 
 *   **990 (TCP) & 50000-50100 (TCP)**: FTPS server and dynamic file upload ports. 
 *   **2021 (UDP)**: Virtual Printer SSDP / mDNS auto-discovery broadcast.
 
+### Persistent Data & Custom Presets
+The Bambuddy add-on uses Home Assistant's `/share` directory to safely store its database and user data so that it persists across reboots and add-on updates.
+
+You can access these files via the **Samba Share** add-on or the **File Editor** add-on at:
+*   `/share/bambuddy/data/bambuddy.db` - Your persistent SQLite database containing all print history, stats, and settings.
+*   `/share/bambuddy/logs/` - Diagnostic logs.
+
+**Importing Custom Presets:**
+To import custom filament or slicing presets into Bambuddy, you do **not** need to manually drop files into the `/share` folder. Simply open the **Bambuddy Web UI**, navigate to the **Presets** or **Library** section, and use the built-in upload/import tools to add your custom `.json` or `.3mf` presets. Because the database is safely mapped to the `/share` folder, your imported profiles will be permanently saved.
+
 ---
 ## Support
 If you have issues, please check the `/share/bambuddy/logs` directory via your Home Assistant File editor or Samba share.

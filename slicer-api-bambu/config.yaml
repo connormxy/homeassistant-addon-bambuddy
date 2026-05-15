@@ -1,5 +1,5 @@
 name: "Bambuddy Slicer API (Bambu)"
-version: "1.0.1"
+version: "1.1"
 slug: bambuddy_bambu_studio_api
 description: "A headless Bambu Studio API sidecar container for Bambuddy Auto-Slicing."
 url: "https://github.com/connormxy/homeassistant-addon-bambuddy"
