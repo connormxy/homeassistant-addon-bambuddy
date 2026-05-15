@@ -45,6 +45,7 @@ It uses the following ports internally. **If you have other Add-ons using these 
 *   **3000 & 3002 (TCP)**: Virtual Printer Handshake / Slicer proxy (Conflicts with Z-Wave JS UI. You must change Z-Wave JS UI's host port if installed).
 *   **322 & 6000 (TCP)**: RTSP Camera streaming ports.
 *   **990 (TCP) & 50000-50100 (TCP)**: FTPS server and dynamic file upload ports. 
+*   **2021 (UDP)**: Virtual Printer SSDP / mDNS auto-discovery broadcast.
 
 ---
 ## Support
