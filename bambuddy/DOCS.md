@@ -4,14 +4,14 @@
 
 This add-on provides several configuration options to customize your Bambuddy experience. Most users can leave these at their default values.
 
-### Slicer Configuration
-Because Bambuddy relies on a headless browser to generate G-code via Slicers, the Slicer APIs must be run in separate, isolated containers (provided in this repository).
+### Auto-Slicing Configuration
+If you want to use the automated print queuing and slicing features, you must install the accompanying Slicer API add-ons provided in the same repository as Bambuddy:
+*   **Slicer API - Orca** (Slug: `bambuddy_orca_slicer_api`)
+*   **Slicer API - Bambu** (Slug: `bambuddy_bambu_studio_api`)
 
-*   **`orcaslicer_api_url`**: The internal URL pointing to the OrcaSlicer API container. 
-    *   *Default*: `http://localhost:3003` 
-    *   *(Note: Because Bambuddy uses host networking, `localhost` perfectly resolves to the port exposed by the separate Slicer Add-on!)*
-*   **`bambu_studio_api_url`**: The internal URL pointing to the Bambu Studio API container.
-    *   *Default*: `http://localhost:3001`
+Because Bambuddy runs in `host_network` mode, it communicates with these sidecars locally through the host machine rather than the internal Docker bridge network. The default configurations are pre-populated and ready to use without requiring internal DNS names:
+*   **`orcaslicer_api_url`**: `http://127.0.0.1:3003`
+*   **`bambu_studio_api_url`**: `http://127.0.0.1:3001`
 *   **`preferred_slicer`**: Select which slicer engine you want Bambuddy to use by default.
 
 ### Security

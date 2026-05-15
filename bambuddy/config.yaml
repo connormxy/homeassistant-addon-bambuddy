@@ -17,14 +17,14 @@ privileged:
 homeassistant_api: true
 options:
   debug: false
-  orcaslicer_api_url: "http://localhost:3003"
-  bambu_studio_api_url: "http://localhost:3001"
+  orcaslicer_api_url: "http://127.0.0.1:3003"
+  bambu_studio_api_url: "http://127.0.0.1:3001"
   preferred_slicer: "bambu_studio"
   mfa_encryption_key: ""
   database_url: ""
   virtual_printer_pasv_address: ""
   mqtt_enabled: false
-  mqtt_broker: "core-mosquitto"
+  mqtt_broker: "127.0.0.1"
   mqtt_port: 1883
   mqtt_username: ""
   mqtt_password: ""
