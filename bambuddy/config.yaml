@@ -21,19 +21,20 @@ schema:
   debug: bool
 map:
   - share:rw
-ports:
-  8000/tcp: 8000
-  3000/tcp: 3000
-  3002/tcp: 3002
-  2021/udp: 2021
-  990/tcp: 990
-  8883/tcp: 8883
-ports_description:
-  8000/tcp: Web UI
-  3000/tcp: Virtual Printer (Handshake 1)
-  3002/tcp: Virtual Printer (Handshake 2)
-  2021/udp: Virtual Printer (SSDP Discovery)
-  990/tcp: Virtual Printer (FTPS File Upload)
-  8883/tcp: Virtual Printer (MQTT Status Stream)
-webui: http://[HOST]:[PORT:8000]
-watchdog: http://[HOST]:[PORT:8000]/health
+host_network: true
+# ports:
+#   8000/tcp: 8000
+#   3000/tcp: 3000
+#   3002/tcp: 3002
+#   2021/udp: 2021
+#   990/tcp: 990
+#   8883/tcp: 8883
+# ports_description:
+#   8000/tcp: Web UI
+#   3000/tcp: Virtual Printer (Handshake 1)
+#   3002/tcp: Virtual Printer (Handshake 2)
+#   2021/udp: Virtual Printer (SSDP Discovery)
+#   990/tcp: Virtual Printer (FTPS File Upload)
+#   8883/tcp: Virtual Printer (MQTT Status Stream)
+webui: http://[HOST]:8000
+watchdog: http://[HOST]:8000/health
