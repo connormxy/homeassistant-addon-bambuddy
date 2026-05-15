@@ -50,14 +50,14 @@ COPY --from=build /app/dist/src /app/dist
 COPY --from=build /app/node_modules /app/node_modules
 COPY --from=build /app/squashfs-root /app/squashfs-root
 
-ENV PORT=3000
+ENV PORT=3003
 ENV ORCASLICER_PATH=/app/squashfs-root/AppRun
 ENV DATA_PATH=/share/bambuddy/slicer/orca
 ENV NODE_ENV=production
 
-EXPOSE 3000
+EXPOSE 3003
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-	CMD curl -f http://localhost:3000/health || exit 1
+	CMD curl -f http://localhost:3003/health || exit 1
 
 CMD ["node", "/app/dist/index.js"]

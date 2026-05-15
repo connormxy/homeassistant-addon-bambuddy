@@ -43,7 +43,7 @@ COPY --from=build /app/dist/src /app/dist
 COPY --from=build /app/node_modules /app/node_modules
 COPY --from=build /app/squashfs-root /app/squashfs-root
 
-ENV PORT=3000
+ENV PORT=3001
 # `ORCASLICER_PATH` is the wrapper's slicer-binary env var, regardless of
 # which slicer is bundled. Point it at the extracted BambuStudio AppRun.
 ENV ORCASLICER_PATH=/app/squashfs-root/AppRun
@@ -52,9 +52,9 @@ ENV NODE_ENV=production
 # Bundled BBL profiles live under the same path inside BambuStudio.
 ENV BUNDLED_PROFILES_PATH=/app/squashfs-root/resources/profiles/BBL
 
-EXPOSE 3000
+EXPOSE 3001
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-    CMD curl -f http://localhost:3000/health || exit 1
+    CMD curl -f http://localhost:3001/health || exit 1
 
 CMD ["node", "/app/dist/index.js"]

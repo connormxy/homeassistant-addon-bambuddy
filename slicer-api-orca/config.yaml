@@ -10,6 +10,6 @@ init: false
 map:
   - share:rw
 ports:
-  3000/tcp: 3003
+  3003/tcp: 3003
 ports_description:
-  3000/tcp: OrcaSlicer API Port (use this in Bambuddy settings)
+  3003/tcp: OrcaSlicer API Port (use this in Bambuddy settings)
