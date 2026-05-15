@@ -17,8 +17,16 @@ privileged:
 homeassistant_api: true
 options:
   debug: false
+  slicer_api_url: "http://localhost:3003"
+  mfa_encryption_key: ""
+  database_url: ""
+  virtual_printer_pasv_address: ""
 schema:
   debug: bool
+  slicer_api_url: str?
+  mfa_encryption_key: password?
+  database_url: password?
+  virtual_printer_pasv_address: str?
 map:
   - share:rw
 host_network: true

@@ -23,6 +23,26 @@ if [ "${debug}" = "true" ]; then
   export DEBUG=true
 fi
 
+if bashio::config.has_value 'slicer_api_url'; then
+  export SLICER_API_URL=$(bashio::config 'slicer_api_url')
+  bashio::log.info "Slicer API URL set to: ${SLICER_API_URL}"
+fi
+
+if bashio::config.has_value 'mfa_encryption_key'; then
+  export MFA_ENCRYPTION_KEY=$(bashio::config 'mfa_encryption_key')
+  bashio::log.info "MFA Encryption Key configured"
+fi
+
+if bashio::config.has_value 'database_url'; then
+  export DATABASE_URL=$(bashio::config 'database_url')
+  bashio::log.info "External Postgres database URL configured"
+fi
+
+if bashio::config.has_value 'virtual_printer_pasv_address'; then
+  export VIRTUAL_PRINTER_PASV_ADDRESS=$(bashio::config 'virtual_printer_pasv_address')
+  bashio::log.info "Virtual Printer Passive Address set to: ${VIRTUAL_PRINTER_PASV_ADDRESS}"
+fi
+
 export HA_URL="http://supervisor/core"
 export HA_TOKEN="${SUPERVISOR_TOKEN}"
 
