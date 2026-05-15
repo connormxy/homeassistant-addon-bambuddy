@@ -50,9 +50,6 @@ def main():
             "mqtt_password": os.environ.get("MQTT_PASSWORD"),
             "mqtt_topic_prefix": os.environ.get("MQTT_TOPIC_PREFIX"),
             "mqtt_use_tls": os.environ.get("MQTT_USE_TLS"),
-            "ha_enabled": os.environ.get("HA_ENABLED_CONFIG"),
-            "ha_url": os.environ.get("HA_URL_CONFIG"),
-            "ha_token": os.environ.get("HA_TOKEN_CONFIG"),
         }
 
         for key, value in settings_to_sync.items():

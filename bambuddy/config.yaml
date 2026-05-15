@@ -30,9 +30,6 @@ options:
   mqtt_password: ""
   mqtt_topic_prefix: "bambuddy"
   mqtt_use_tls: false
-  ha_enabled: false
-  ha_url: ""
-  ha_token: ""
 schema:
   debug: bool
   orcaslicer_api_url: str?
@@ -48,9 +45,6 @@ schema:
   mqtt_password: password?
   mqtt_topic_prefix: str?
   mqtt_use_tls: bool?
-  ha_enabled: bool?
-  ha_url: str?
-  ha_token: password?
 map:
   - share:rw
 host_network: true
