@@ -1,6 +1,6 @@
 # https://developers.home-assistant.io/docs/add-ons/configuration#add-on-config
 name: Bambuddy
-version: "0.2.4"
+version: "0.2.4.1"
 slug: bambuddy
 description: Bambuddy is a powerful, self-hosted print archive and management system for Bambu Lab 3D printers.
 url: "https://github.com/connormxy/homeassistant-addon-bambuddy"
@@ -11,7 +11,7 @@ arch:
   - amd64
   - i386
 init: false
-hassio_role: homeassistant
+role: homeassistant
 privileged:
   - NET_RAW
 homeassistant_api: true
@@ -22,19 +22,5 @@ schema:
 map:
   - share:rw
 host_network: true
-# ports:
-#   8000/tcp: 8000
-#   3000/tcp: 3000
-#   3002/tcp: 3002
-#   2021/udp: 2021
-#   990/tcp: 990
-#   8883/tcp: 8883
-# ports_description:
-#   8000/tcp: Web UI
-#   3000/tcp: Virtual Printer (Handshake 1)
-#   3002/tcp: Virtual Printer (Handshake 2)
-#   2021/udp: Virtual Printer (SSDP Discovery)
-#   990/tcp: Virtual Printer (FTPS File Upload)
-#   8883/tcp: Virtual Printer (MQTT Status Stream)
 webui: http://[HOST]:8000
 watchdog: http://[HOST]:8000/health
