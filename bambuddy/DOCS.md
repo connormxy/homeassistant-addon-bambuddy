@@ -36,6 +36,16 @@ Bambuddy connects directly to your printer to monitor it, but it can also "Relay
 *   **`mqtt_topic_prefix`**: The root topic for events (default: `bambuddy`).
 *   **`mqtt_use_tls`**: Toggle if your broker requires secure connections.
 
+### Network Ports (Advanced)
+Because Bambuddy relies on emulating physical Bambu Lab printer hardware to capture print jobs via the "Virtual Printer" feature, it must run in `host_network` mode. This means it binds directly to your Home Assistant host's network interfaces.
+
+It uses the following ports internally. **If you have other Add-ons using these ports, Bambuddy's Virtual Printer feature may fail to start:**
+*   **8000 (TCP)**: The Bambuddy Web UI.
+*   **8883 (TCP)**: MQTT Status Stream (Conflicts with Mosquitto Add-on if TLS is enabled on default port. You may need to change Mosquitto's SSL port to 18883/18884).
+*   **3000 & 3002 (TCP)**: Virtual Printer Handshake / Slicer proxy (Conflicts with Z-Wave JS UI. You must change Z-Wave JS UI's host port if installed).
+*   **322 & 6000 (TCP)**: RTSP Camera streaming ports.
+*   **990 (TCP) & 50000-50100 (TCP)**: FTPS server and dynamic file upload ports. 
+
 ---
 ## Support
 If you have issues, please check the `/share/bambuddy/logs` directory via your Home Assistant File editor or Samba share.
