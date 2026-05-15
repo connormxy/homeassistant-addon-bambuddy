@@ -17,13 +17,17 @@ privileged:
 homeassistant_api: true
 options:
   debug: false
-  slicer_api_url: "http://localhost:3003"
+  orcaslicer_api_url: "http://localhost:3003"
+  bambu_studio_api_url: "http://localhost:3001"
+  preferred_slicer: "bambu_studio"
   mfa_encryption_key: ""
   database_url: ""
   virtual_printer_pasv_address: ""
 schema:
   debug: bool
-  slicer_api_url: str?
+  orcaslicer_api_url: str?
+  bambu_studio_api_url: str?
+  preferred_slicer: list(bambu_studio|orcaslicer)?
   mfa_encryption_key: password?
   database_url: password?
   virtual_printer_pasv_address: str?

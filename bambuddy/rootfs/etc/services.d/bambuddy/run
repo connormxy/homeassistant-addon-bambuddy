@@ -23,9 +23,19 @@ if [ "${debug}" = "true" ]; then
   export DEBUG=true
 fi
 
-if bashio::config.has_value 'slicer_api_url'; then
-  export SLICER_API_URL=$(bashio::config 'slicer_api_url')
-  bashio::log.info "Slicer API URL set to: ${SLICER_API_URL}"
+if bashio::config.has_value 'orcaslicer_api_url'; then
+  export SLICER_API_URL=$(bashio::config 'orcaslicer_api_url')
+  bashio::log.info "OrcaSlicer API URL set to: ${SLICER_API_URL}"
+fi
+
+if bashio::config.has_value 'bambu_studio_api_url'; then
+  export BAMBU_STUDIO_API_URL=$(bashio::config 'bambu_studio_api_url')
+  bashio::log.info "Bambu Studio API URL set to: ${BAMBU_STUDIO_API_URL}"
+fi
+
+if bashio::config.has_value 'preferred_slicer'; then
+  export PREFERRED_SLICER=$(bashio::config 'preferred_slicer')
+  bashio::log.info "Preferred Slicer set to: ${PREFERRED_SLICER}"
 fi
 
 if bashio::config.has_value 'mfa_encryption_key'; then
