@@ -15,3 +15,21 @@ A self-hosted print archive and management system for Bambu Lab 3D printers.
 [armhf-shield]: https://img.shields.io/badge/armhf-yes-green.svg
 [armv7-shield]: https://img.shields.io/badge/armv7-yes-green.svg
 [i386-shield]: https://img.shields.io/badge/i386-yes-green.svg
+
+## Installation
+
+This repository contains a **multi-addon ecosystem** designed to work seamlessly together.
+
+1. **Bambuddy**: The main core application and web interface.
+2. **Slicer API (Bambu Studio)**: An optional headless slicing engine for Bambu Studio files.
+3. **Slicer API (OrcaSlicer)**: An optional headless slicing engine for OrcaSlicer files.
+
+To use the auto-slicing features of Bambuddy, you must install the Main Add-on **AND** at least one of the Slicer APIs.
+
+## Configuration & Documentation
+
+Please refer to the `Documentation` tab inside the Home Assistant Add-on page after installing, or view the [DOCS.md](./bambuddy/DOCS.md) file directly for detailed explanations of:
+*   MQTT Relay Configuration (using `core-mosquitto`)
+*   Slicer API routing
+*   Database and Security overrides
+*   Virtual Printer Setup

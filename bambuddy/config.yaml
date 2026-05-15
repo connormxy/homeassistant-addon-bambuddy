@@ -24,7 +24,7 @@ options:
   database_url: ""
   virtual_printer_pasv_address: ""
   mqtt_enabled: false
-  mqtt_broker: ""
+  mqtt_broker: "core-mosquitto"
   mqtt_port: 1883
   mqtt_username: ""
   mqtt_password: ""
