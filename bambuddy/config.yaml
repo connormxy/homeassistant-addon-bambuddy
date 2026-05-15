@@ -30,6 +30,7 @@ options:
   mqtt_password: ""
   mqtt_topic_prefix: "bambuddy"
   mqtt_use_tls: false
+  obico_ml_url: ""
 schema:
   debug: bool
   orcaslicer_api_url: str?
@@ -45,6 +46,7 @@ schema:
   mqtt_password: password?
   mqtt_topic_prefix: str?
   mqtt_use_tls: bool?
+  obico_ml_url: str?
 map:
   - share:rw
 host_network: true

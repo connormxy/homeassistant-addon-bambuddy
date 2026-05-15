@@ -75,6 +75,11 @@ if bashio::config.has_value 'virtual_printer_pasv_address'; then
   bashio::log.info "Virtual Printer Passive Address set to: ${VIRTUAL_PRINTER_PASV_ADDRESS}"
 fi
 
+if bashio::config.has_value 'obico_ml_url'; then
+  export OBICO_ML_URL=$(bashio::config 'obico_ml_url')
+  bashio::log.info "Obico ML URL set to: ${OBICO_ML_URL}"
+fi
+
 bashio::log.info 'Synchronizing settings to database...'
 python3 /app/scripts/init_settings.py
 

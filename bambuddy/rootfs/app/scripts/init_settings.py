@@ -50,6 +50,7 @@ def main():
             "mqtt_password": os.environ.get("MQTT_PASSWORD"),
             "mqtt_topic_prefix": os.environ.get("MQTT_TOPIC_PREFIX"),
             "mqtt_use_tls": os.environ.get("MQTT_USE_TLS"),
+            "obico_ml_url": os.environ.get("OBICO_ML_URL"),
         }
 
         for key, value in settings_to_sync.items():
