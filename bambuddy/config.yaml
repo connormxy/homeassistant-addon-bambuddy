@@ -23,6 +23,16 @@ options:
   mfa_encryption_key: ""
   database_url: ""
   virtual_printer_pasv_address: ""
+  mqtt_enabled: false
+  mqtt_broker: ""
+  mqtt_port: 1883
+  mqtt_username: ""
+  mqtt_password: ""
+  mqtt_topic_prefix: "bambuddy"
+  mqtt_use_tls: false
+  ha_enabled: false
+  ha_url: ""
+  ha_token: ""
 schema:
   debug: bool
   orcaslicer_api_url: str?
@@ -31,6 +41,16 @@ schema:
   mfa_encryption_key: password?
   database_url: password?
   virtual_printer_pasv_address: str?
+  mqtt_enabled: bool?
+  mqtt_broker: str?
+  mqtt_port: int(1,65535)?
+  mqtt_username: str?
+  mqtt_password: password?
+  mqtt_topic_prefix: str?
+  mqtt_use_tls: bool?
+  ha_enabled: bool?
+  ha_url: str?
+  ha_token: password?
 map:
   - share:rw
 host_network: true

@@ -48,10 +48,45 @@ if bashio::config.has_value 'database_url'; then
   bashio::log.info "External Postgres database URL configured"
 fi
 
+if bashio::config.has_value 'mqtt_enabled'; then
+  export MQTT_ENABLED=$(bashio::config 'mqtt_enabled')
+fi
+if bashio::config.has_value 'mqtt_broker'; then
+  export MQTT_BROKER=$(bashio::config 'mqtt_broker')
+fi
+if bashio::config.has_value 'mqtt_port'; then
+  export MQTT_PORT=$(bashio::config 'mqtt_port')
+fi
+if bashio::config.has_value 'mqtt_username'; then
+  export MQTT_USERNAME=$(bashio::config 'mqtt_username')
+fi
+if bashio::config.has_value 'mqtt_password'; then
+  export MQTT_PASSWORD=$(bashio::config 'mqtt_password')
+fi
+if bashio::config.has_value 'mqtt_topic_prefix'; then
+  export MQTT_TOPIC_PREFIX=$(bashio::config 'mqtt_topic_prefix')
+fi
+if bashio::config.has_value 'mqtt_use_tls'; then
+  export MQTT_USE_TLS=$(bashio::config 'mqtt_use_tls')
+fi
+
+if bashio::config.has_value 'ha_enabled'; then
+  export HA_ENABLED_CONFIG=$(bashio::config 'ha_enabled')
+fi
+if bashio::config.has_value 'ha_url'; then
+  export HA_URL_CONFIG=$(bashio::config 'ha_url')
+fi
+if bashio::config.has_value 'ha_token'; then
+  export HA_TOKEN_CONFIG=$(bashio::config 'ha_token')
+fi
+
 if bashio::config.has_value 'virtual_printer_pasv_address'; then
   export VIRTUAL_PRINTER_PASV_ADDRESS=$(bashio::config 'virtual_printer_pasv_address')
   bashio::log.info "Virtual Printer Passive Address set to: ${VIRTUAL_PRINTER_PASV_ADDRESS}"
 fi
+
+bashio::log.info 'Synchronizing settings to database...'
+python3 /app/scripts/init_settings.py
 
 export HA_URL="http://supervisor/core"
 export HA_TOKEN="${SUPERVISOR_TOKEN}"
