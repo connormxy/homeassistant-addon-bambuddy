@@ -67,6 +67,7 @@ fi
 if bashio::services.available 'mqtt'; then
   if [ "${MQTT_BROKER}" = "127.0.0.1" ] || [ -z "${MQTT_BROKER}" ]; then
     bashio::log.info "Auto-discovering MQTT credentials from Home Assistant Supervisor..."
+    export MQTT_ENABLED="true"
     export MQTT_BROKER=$(bashio::services mqtt "host")
     export MQTT_PORT=$(bashio::services mqtt "port")
     export MQTT_USERNAME=$(bashio::services mqtt "username")
@@ -92,7 +93,7 @@ fi
 bashio::log.info 'Synchronizing settings to database...'
 python3 /app/scripts/init_settings.py
 
-export HA_URL="http://supervisor/core"
+export HA_URL="http://supervisor/core/api/"
 export HA_TOKEN="${SUPERVISOR_TOKEN}"
 
 bashio::log.info 'Start Bambuddy ...'

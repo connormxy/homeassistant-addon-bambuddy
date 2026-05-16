@@ -4,6 +4,10 @@
 
 All notable changes to the App will be documented in this file.
 
+## [0.2.4.1-3] - 2026-05-16
+
+- **Auto-Discovery**: Fixed an issue where the MQTT broker auto-discovery successfully fetched credentials but failed to automatically toggle `MQTT_ENABLED=true`.
+
 ## [0.2.4.1-2] - 2026-05-16
 
 - **Fix**: Corrected the file path in the Dockerfile notification patch to properly apply during build.
