@@ -26,7 +26,7 @@ RUN if [ "$BUILD_ARCH" = "aarch64" ] || [ "$BUILD_ARCH" = "arm64" ]; then \
 RUN npm ci
 RUN npm run build
 
-FROM ubuntu:24.04
+FROM ubuntu:26.04
 
 RUN apt-get update \
 	&& apt-get upgrade -y \
