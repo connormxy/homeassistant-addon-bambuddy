@@ -4,6 +4,10 @@
 
 All notable changes to the App will be documented in this file.
 
+## [0.2.4.1-0] - 2026-05-16
+
+- **Upstream Bump**: Updated base Bambuddy image to `0.2.4.1`
+
 ## [0.2.4-1] - 2026-05-16
 
 - **Fix**: Reverted Home Assistant API URL to properly route notification service calls.
