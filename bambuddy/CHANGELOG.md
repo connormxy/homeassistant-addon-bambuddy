@@ -4,6 +4,11 @@
 
 All notable changes to the App will be documented in this file.
 
+## [0.2.4.1-1] - 2026-05-16
+
+- **Fix**: Injected a dynamic patch into the Bambuddy backend to automatically map legacy notification schemas to the new Home Assistant 2024.6+ `notify.send_message` entity architecture.
+- **Dependency**: Pulled downstream Renovate bot updates for OrcaSlicer and BambuStudio container dependencies.
+
 ## [0.2.4.1-0] - 2026-05-16
 
 - **Upstream Bump**: Updated base Bambuddy image to `0.2.4.1`
