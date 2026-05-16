@@ -4,6 +4,11 @@
 
 All notable changes to the App will be documented in this file.
 
+## [0.2.4-1] - 2026-05-16
+
+- **Fix**: Reverted Home Assistant API URL to properly route notification service calls.
+- **Auto-Discovery**: Added `bashio::services` integration to auto-discover MQTT broker credentials from Home Assistant if left as defaults in the UI config.
+
 ## [0.2.4] - 2026-05-15
 
 - **Networking**: Switched to `host_network: true` to support SSDP discovery and Virtual Printer FTP file transfers.
