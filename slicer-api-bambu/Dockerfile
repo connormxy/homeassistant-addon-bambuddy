@@ -1,4 +1,4 @@
-FROM node:22-bookworm AS build
+FROM node:24-bookworm AS build
 
 ARG BAMBU_VERSION=02.06.00.51
 
