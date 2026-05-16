@@ -48,7 +48,10 @@ schema:
   mqtt_use_tls: bool?
   obico_ml_url: str?
 map:
+  - addon_config:rw
   - share:rw
+services:
+  - mqtt:want
 host_network: true
 webui: http://[HOST]:[PORT:8000]
 watchdog: http://[HOST]:[PORT:8000]/health
