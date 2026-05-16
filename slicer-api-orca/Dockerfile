@@ -1,4 +1,4 @@
-FROM node:22-bookworm AS build
+FROM node:24-bookworm AS build
 
 ARG ORCA_VERSION=2.3.2
 ARG BUILD_ARCH
