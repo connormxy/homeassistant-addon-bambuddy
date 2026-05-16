@@ -17,7 +17,7 @@ RUN echo "Downloading BambuStudio v${BAMBU_VERSION}..."; \
 RUN npm ci
 RUN npm run build
 
-FROM ubuntu:22.04
+FROM ubuntu:26.04
 
 # BambuStudio is built against webkit2gtk-4.0 (Ubuntu 22.04 era); 24.04
 # only ships 4.1, so the runtime image stays on 22.04.
