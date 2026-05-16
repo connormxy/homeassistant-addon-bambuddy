@@ -24,7 +24,7 @@ COPY --from=builder /app /app
 
 # Patch notification_service.py to support HA 2024.6 notify entities
 RUN python3 -c "import re; \
-path = '/app/services/notification_service.py'; \
+path = '/app/backend/app/services/notification_service.py'; \
 content = open(path).read(); \
 patch = '''\n\
         payload = {\n\

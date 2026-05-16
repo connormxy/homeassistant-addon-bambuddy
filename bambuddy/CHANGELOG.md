@@ -4,6 +4,10 @@
 
 All notable changes to the App will be documented in this file.
 
+## [0.2.4.1-2] - 2026-05-16
+
+- **Fix**: Corrected the file path in the Dockerfile notification patch to properly apply during build.
+
 ## [0.2.4.1-1] - 2026-05-16
 
 - **Fix**: Injected a dynamic patch into the Bambuddy backend to automatically map legacy notification schemas to the new Home Assistant 2024.6+ `notify.send_message` entity architecture.
