@@ -3,6 +3,10 @@
 # Changelog
 
 All notable changes to the App will be documented in this file.
+## [0.2.4.1-8.2] - 2026-05-17
+
+- **Fix**: Pinned `numpy<2` via pip constraints — the HA prebuilt opencv wheel was compiled against NumPy 1.x and crashes with NumPy 2.x (`_ARRAY_API not found`).
+
 ## [0.2.4.1-8.1] - 2026-05-17
 
 - **Build**: Added `--prefer-binary` to pip install to ensure prebuilt wheels are always preferred over source distributions.

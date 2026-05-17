@@ -34,9 +34,11 @@ RUN apk add --no-cache \
 COPY --from=builder /app/requirements.txt ./
 RUN --mount=type=cache,target=/root/.cache/pip \
   pip install --root-user-action=ignore --upgrade pip \
+  && echo "numpy<2" > /tmp/constraints.txt \
   && pip install --root-user-action=ignore \
      --find-links https://wheels.home-assistant.io/musllinux/ \
      --prefer-binary \
+     -c /tmp/constraints.txt \
      -r requirements.txt
 
 COPY --from=builder /app /app
