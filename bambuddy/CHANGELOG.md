@@ -3,6 +3,10 @@
 # Changelog
 
 All notable changes to the App will be documented in this file.
+## [0.2.4.1-8.1] - 2026-05-17
+
+- **Build**: Added `--prefer-binary` to pip install to ensure prebuilt wheels are always preferred over source distributions.
+
 ## [0.2.4.1-8] - 2026-05-17
 
 - **Fix**: To permit Plate Detector: Downgraded base image from Python 3.14 to 3.11 (`3.11-alpine3.21`) to match HA wheels server's prebuilt `cp311` opencv-python-headless wheels — eliminates the 30+ minute source compilation that was failing on install.

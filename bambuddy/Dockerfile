@@ -36,6 +36,7 @@ RUN --mount=type=cache,target=/root/.cache/pip \
   pip install --root-user-action=ignore --upgrade pip \
   && pip install --root-user-action=ignore \
      --find-links https://wheels.home-assistant.io/musllinux/ \
+     --prefer-binary \
      -r requirements.txt
 
 COPY --from=builder /app /app
