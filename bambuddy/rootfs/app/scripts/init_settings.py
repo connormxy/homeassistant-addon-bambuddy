@@ -3,18 +3,18 @@ import sqlite3
 import logging
 
 logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger("init_mqtt")
+logger = logging.getLogger("init_settings")
 
 DB_PATH = "/share/bambuddy/data/bambuddy.db"
 
 def upsert_setting(cursor, key, value):
-    if value is None:
+    """Insert or update a single setting. Skips None/empty values."""
+    if not value:
         return
-    
-    # Check if exists
+
     cursor.execute("SELECT id FROM settings WHERE key = ?", (key,))
     row = cursor.fetchone()
-    
+
     if row:
         logger.info(f"Updating setting {key}")
         cursor.execute("UPDATE settings SET value = ?, updated_at = CURRENT_TIMESTAMP WHERE key = ?", (str(value), key))
@@ -24,14 +24,13 @@ def upsert_setting(cursor, key, value):
 
 def main():
     if not os.path.exists(DB_PATH):
-        logger.info("Database not found, skipping MQTT initialization")
+        logger.info("Database not found, skipping settings initialization")
         return
 
     try:
         conn = sqlite3.connect(DB_PATH)
         cursor = conn.cursor()
 
-        # Create table if it doesn't exist (e.g. first run)
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS settings (
                 id INTEGER PRIMARY KEY,
@@ -42,6 +41,9 @@ def main():
             )
         """)
 
+        # Only sync env vars that are actually set (non-empty).
+        # This preserves any values the user configured in the Bambuddy web UI
+        # when the corresponding add-on config field was left blank.
         settings_to_sync = {
             "mqtt_enabled": os.environ.get("MQTT_ENABLED"),
             "mqtt_broker": os.environ.get("MQTT_BROKER"),
@@ -54,18 +56,11 @@ def main():
         }
 
         for key, value in settings_to_sync.items():
-            if value and value != "":
-                # Convert "true"/"false" strings to expected format if needed
-                if value.lower() == "true":
-                    upsert_setting(cursor, key, "true")
-                elif value.lower() == "false":
-                    upsert_setting(cursor, key, "false")
-                else:
-                    upsert_setting(cursor, key, value)
+            upsert_setting(cursor, key, value)
 
         conn.commit()
         conn.close()
-        logger.info("MQTT and HA settings synchronized successfully")
+        logger.info("Settings synchronized successfully")
     except Exception as e:
         logger.error(f"Failed to synchronize settings: {e}")
 

@@ -28,13 +28,18 @@ Because Bambuddy runs in `host_network` mode, it communicates with these sidecar
 ### MQTT Relay Settings
 Bambuddy connects directly to your printer to monitor it, but it can also "Relay" these events (Print Started, Filament Low, etc.) to your Home Assistant MQTT broker so you can build automations around them.
 
-*   **`mqtt_enabled`**: Toggle to `true` to turn on the relay.
-*   **`mqtt_broker`**: The address of your MQTT broker. If you use the official Home Assistant Mosquitto Add-on, the internal slug `core-mosquitto` is pre-populated and works automatically!
-*   **`mqtt_port`**: Typically `1883`.
-*   **`mqtt_username`**: Your Home Assistant/Mosquitto username.
-*   **`mqtt_password`**: Your Home Assistant/Mosquitto password. *Tip: You can securely use your secrets.yaml file by entering `!secret my_mqtt_password` here.*
-*   **`mqtt_topic_prefix`**: The root topic for events (default: `bambuddy`).
-*   **`mqtt_use_tls`**: Toggle if your broker requires secure connections.
+**If you use the official Mosquitto Add-on, MQTT works automatically with no configuration needed.** The add-on auto-discovers broker credentials from the Supervisor at startup.
+
+All MQTT fields are **blank by default** in the add-on config. You only need to fill them in if you want to override auto-discovered values or use a custom broker:
+
+*   **`mqtt_enabled`**: Leave blank for auto-detection, or set explicitly to `true`/`false`.
+*   **`mqtt_broker`**: Auto-detected from Mosquitto if blank. Set to a custom address if using an external broker.
+*   **`mqtt_port`**: Typically `1883`. Auto-detected if blank.
+*   **`mqtt_username`** / **`mqtt_password`**: Auto-detected from Mosquitto if blank. Set manually for external brokers.
+*   **`mqtt_topic_prefix`**: The root topic for events (default in Bambuddy: `bambuddy`).
+*   **`mqtt_use_tls`**: Auto-detected if blank. Toggle for brokers requiring secure connections.
+
+> **Note:** Settings configured in the Bambuddy web UI persist across restarts as long as the corresponding add-on config field is left blank. Filling in an add-on config field will override the web UI value on each restart.
 
 ### Network Ports (Advanced)
 Because Bambuddy relies on emulating physical Bambu Lab printer hardware to capture print jobs via the "Virtual Printer" feature, it must run in `host_network` mode. This means it binds directly to your Home Assistant host's network interfaces.

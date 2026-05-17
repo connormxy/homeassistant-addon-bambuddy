@@ -16,6 +16,19 @@ A self-hosted print archive and management system for Bambu Lab 3D printers.
 [armv7-shield]: https://img.shields.io/badge/armv7-yes-green.svg
 [i386-shield]: https://img.shields.io/badge/i386-yes-green.svg
 
+## What This Add-on Provides
+
+This is a **Home Assistant wrapper** for the upstream [Bambuddy](https://github.com/maziggy/bambuddy) project. It adds:
+
+- **🔌 Zero-config HA integration** — Supervisor auto-injects API URL and token; HA notifications (including 2024.6+ `notify.send_message` entities) work immediately.
+- **📡 Auto-discovered MQTT** — If the Mosquitto add-on is installed, broker credentials are auto-detected. MQTT fields are blank by default; fill them in only if you need custom overrides.
+- **🧩 Companion Slicer API add-ons** — Install **Slicer API (Bambu Studio)** on port 3001 and/or **Slicer API (OrcaSlicer)** on port 3003 from this same repository for server-side slicing.
+- **🖼️ Fast OpenCV install** — Python 3.11 base matched to HA's precompiled `opencv-python-headless` wheel for ~5 min installs and working empty plate detection.
+- **🤖 AI failure detection** — Set `obico_ml_url` to point at a self-hosted [Obico ML server](https://github.com/TheSpaghettiDetective/obico-server) (`http://127.0.0.1:3333`). Useful for **all** Bambu printers — continuous AI print monitoring is a Bambu Cloud feature not available in developer/LAN mode. Community add-ons: [Obico ML HA Add-on](https://github.com/nobodyguy/obico_ml_ha_addon), [P1S Spaghetti Detection](https://github.com/nberktumer/ha-bambu-lab-p1-spaghetti-detection).
+- **⚠️ Host network mode** — Required for SSDP discovery, Virtual Printer FTP, and camera streaming. See [DOCS.md](DOCS.md) for port conflict details (8000, 8883, 3000, 3002, 990, etc.).
+- **🚫 No ingress** — Bambuddy is accessed directly at `http://<your-ha-ip>:8000`. The frontend's fixed root-context paths and WebSocket connections are incompatible with HA's ingress iframe proxy.
+
+<sub>The Home Assistant add-on wrapper code in this repository was developed with assistance from Claude (Anthropic) and Gemini (Google). All generated code was reviewed and tested by the maintainer.</sub>
 
 ---
 

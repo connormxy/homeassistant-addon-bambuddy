@@ -19,8 +19,6 @@ RUN npm run build
 
 FROM ubuntu:26.04
 
-# BambuStudio is built against webkit2gtk-4.0 (Ubuntu 22.04 era); 24.04
-# only ships 4.1, so the runtime image stays on 22.04.
 RUN apt-get update \
     && apt-get upgrade -y \
     && apt-get install -y --no-install-recommends \

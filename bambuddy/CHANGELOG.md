@@ -3,36 +3,25 @@
 # Changelog
 
 All notable changes to the App will be documented in this file.
-## [0.2.4.1-8.2] - 2026-05-17
 
-- **Fix**: Pinned `numpy<2` via pip constraints — the HA prebuilt opencv wheel was compiled against NumPy 1.x and crashes with NumPy 2.x (`_ARRAY_API not found`).
+## [0.2.4.1-9] - 2026-05-17
 
-## [0.2.4.1-8.1] - 2026-05-17
+### Build & Install Optimizations
+- **Base image**: Downgraded from Python 3.14 to **Python 3.11** (`3.11-alpine3.21`) to match the HA wheels server's precompiled `cp311` `opencv-python-headless` wheels — installs in ~5 minutes instead of failing on a 30+ minute source compilation.
+- **Pip flags**: Added `--find-links` (HA musllinux wheel server), `--prefer-binary`, and a `numpy<2` constraint to guarantee prebuilt wheels and ABI compatibility.
+- **BuildKit migration**: Moved deprecated `build.yaml` options into Dockerfile `ARG` directives.
 
-- **Build**: Added `--prefer-binary` to pip install to ensure prebuilt wheels are always preferred over source distributions.
+### MQTT & Configuration
+- **Zero-config MQTT**: MQTT fields are now blank by default in the add-on config. If the Mosquitto add-on is installed, credentials are auto-discovered from the supervisor — MQTT just works with no manual setup. User-configured values in either the add-on config or the Bambuddy web UI are respected and never silently overwritten.
+- **Auto-discovery fix**: Fixed an issue where MQTT auto-discovery fetched credentials but failed to set `MQTT_ENABLED=true`.
 
-## [0.2.4.1-8] - 2026-05-17
+### Fixes
+- **HA notifications**: Injected a runtime patch for the Home Assistant 2024.6+ `notify.send_message` entity architecture.
+- **Supervisor path**: Corrected `HA_URL` to `http://supervisor/core` (Bambuddy appends `/api/` internally).
+- **Run script**: Fixed `rm -r` → `rm -rf` for idempotent data directory setup; removed template boilerplate.
 
-- **Fix**: To permit Plate Detector: Downgraded base image from Python 3.14 to 3.11 (`3.11-alpine3.21`) to match HA wheels server's prebuilt `cp311` opencv-python-headless wheels — eliminates the 30+ minute source compilation that was failing on install.
-
-## [0.2.4.1-4] - 2026-05-17
-
-- **Build**: Migrated deprecated `build.yaml` options to Dockerfile `ARG` directives.
-- **Fix**: Replaced broken `py3-opencv` + `sed` workaround with HA's precompiled musllinux wheels for `opencv-python-headless`, fixing empty plate detection.
-- **Fix**: Corrected `HA_URL` supervisor path to `http://supervisor/core` (Bambuddy appends its own `/api/` path).
-
-## [0.2.4.1-3] - 2026-05-16
-
-- **Auto-Discovery**: Fixed an issue where the MQTT broker auto-discovery successfully fetched credentials but failed to automatically toggle `MQTT_ENABLED=true`.
-
-## [0.2.4.1-2] - 2026-05-16
-
-- **Fix**: Corrected the file path in the Dockerfile notification patch to properly apply during build.
-
-## [0.2.4.1-1] - 2026-05-16
-
-- **Fix**: Injected a dynamic patch into the Bambuddy backend to automatically map legacy notification schemas to the new Home Assistant 2024.6+ `notify.send_message` entity architecture.
-- **Dependency**: Pulled downstream Renovate bot updates for OrcaSlicer and BambuStudio container dependencies.
+### Internal
+- **init_settings.py**: Renamed logger, simplified boolean handling, added documentation comments.
 
 ## [0.2.4.1-0] - 2026-05-16
 
@@ -46,6 +35,5 @@ All notable changes to the App will be documented in this file.
 ## [0.2.4] - 2026-05-15
 
 - **Networking**: Switched to `host_network: true` to support SSDP discovery and Virtual Printer FTP file transfers.
-- **Proxy**: Removed internal NGINX proxy to resolve `8099` port conflicts with Zigbee2MQTT.
 - **Home Assistant API**: Seamlessly injected via Supervisor token (no manual UI setup required).
 - **MQTT**: Added complete configurable integration with local Mosquitto brokers.
