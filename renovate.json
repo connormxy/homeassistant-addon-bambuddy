@@ -1,0 +1,29 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base"
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "fileMatch": ["^bambuddy/build\\.yaml$"],
+      "matchStrings": ["BAMBUDDY_VERSION:\\s*\"(?<currentValue>.*?)\""],
+      "depNameTemplate": "maziggy/bambuddy",
+      "datasourceTemplate": "github-releases"
+    },
+    {
+      "customType": "regex",
+      "fileMatch": ["^slicer-api-orca/Dockerfile$"],
+      "matchStrings": ["ARG ORCA_VERSION=(?<currentValue>.*?)\\n"],
+      "depNameTemplate": "SoftFever/OrcaSlicer",
+      "datasourceTemplate": "github-releases"
+    },
+    {
+      "customType": "regex",
+      "fileMatch": ["^slicer-api-bambu/Dockerfile$"],
+      "matchStrings": ["ARG BAMBU_VERSION=(?<currentValue>.*?)\\n"],
+      "depNameTemplate": "bambulab/BambuStudio",
+      "datasourceTemplate": "github-releases"
+    }
+  ]
+}

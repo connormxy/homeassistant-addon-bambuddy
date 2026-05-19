@@ -1,0 +1,124 @@
+#!/usr/bin/with-contenv bashio
+# ==============================================================================
+# Bambuddy add-on entry point
+# ==============================================================================
+
+declare debug
+debug=$(bashio::config 'debug')
+
+bashio::log.info 'Link data dir'
+mkdir -p /share/bambuddy/data
+mkdir -p /share/bambuddy/logs
+rm -rf /app/data
+rm -rf /app/logs
+ln -s /share/bambuddy/data /app/data
+ln -s /share/bambuddy/logs /app/logs
+
+cd /app
+
+if [ "${debug}" = "true" ]; then
+  bashio::log.info 'Enabling debug mode'
+  export DEBUG=true
+fi
+
+if bashio::config.has_value 'orcaslicer_api_url'; then
+  url=$(bashio::config 'orcaslicer_api_url')
+  if [[ ! "$url" =~ ^https?:// ]]; then
+    url="http://$url"
+  fi
+  export SLICER_API_URL="$url"
+  bashio::log.info "OrcaSlicer API URL set to: ${SLICER_API_URL}"
+fi
+
+if bashio::config.has_value 'bambu_studio_api_url'; then
+  url=$(bashio::config 'bambu_studio_api_url')
+  if [[ ! "$url" =~ ^https?:// ]]; then
+    url="http://$url"
+  fi
+  export BAMBU_STUDIO_API_URL="$url"
+  bashio::log.info "Bambu Studio API URL set to: ${BAMBU_STUDIO_API_URL}"
+fi
+
+if bashio::config.has_value 'preferred_slicer'; then
+  export PREFERRED_SLICER=$(bashio::config 'preferred_slicer')
+  bashio::log.info "Preferred Slicer set to: ${PREFERRED_SLICER}"
+fi
+
+if bashio::config.has_value 'mfa_encryption_key'; then
+  export MFA_ENCRYPTION_KEY=$(bashio::config 'mfa_encryption_key')
+  bashio::log.info "MFA Encryption Key configured"
+fi
+
+if bashio::config.has_value 'database_url'; then
+  export DATABASE_URL=$(bashio::config 'database_url')
+  bashio::log.info "External Postgres database URL configured"
+fi
+
+# --- MQTT Configuration ---
+# Priority: 1) User add-on config overrides  2) Supervisor auto-discovery  3) Bambuddy UI settings (DB)
+# MQTT config fields are intentionally left blank in options so the Bambuddy UI
+# settings persist across restarts. Only explicitly user-set values override.
+
+if bashio::config.has_value 'mqtt_enabled'; then
+  export MQTT_ENABLED=$(bashio::config 'mqtt_enabled')
+fi
+if bashio::config.has_value 'mqtt_broker'; then
+  broker=$(bashio::config 'mqtt_broker')
+  broker=$(echo "$broker" | sed -E 's|^.*://||; s|:[0-9]+$||')
+  export MQTT_BROKER="$broker"
+fi
+if bashio::config.has_value 'mqtt_port'; then
+  export MQTT_PORT=$(bashio::config 'mqtt_port')
+fi
+if bashio::config.has_value 'mqtt_username'; then
+  export MQTT_USERNAME=$(bashio::config 'mqtt_username')
+fi
+if bashio::config.has_value 'mqtt_password'; then
+  export MQTT_PASSWORD=$(bashio::config 'mqtt_password')
+fi
+if bashio::config.has_value 'mqtt_use_tls'; then
+  export MQTT_USE_TLS=$(bashio::config 'mqtt_use_tls')
+fi
+if bashio::config.has_value 'mqtt_topic_prefix'; then
+  export MQTT_TOPIC_PREFIX=$(bashio::config 'mqtt_topic_prefix')
+fi
+
+# Auto-discover MQTT from supervisor if no user overrides were set
+if bashio::services.available 'mqtt'; then
+  if [ -z "${MQTT_BROKER}" ]; then
+    bashio::log.info "Auto-discovering MQTT credentials from Home Assistant Supervisor..."
+    export MQTT_ENABLED="true"
+    export MQTT_BROKER=$(bashio::services mqtt "host")
+    export MQTT_PORT=$(bashio::services mqtt "port")
+    export MQTT_USERNAME=$(bashio::services mqtt "username")
+    export MQTT_PASSWORD=$(bashio::services mqtt "password")
+    if [ "$(bashio::services mqtt "ssl")" = "true" ]; then
+      export MQTT_USE_TLS="true"
+    else
+      export MQTT_USE_TLS="false"
+    fi
+  fi
+fi
+
+if bashio::config.has_value 'virtual_printer_pasv_address'; then
+  export VIRTUAL_PRINTER_PASV_ADDRESS=$(bashio::config 'virtual_printer_pasv_address')
+  bashio::log.info "Virtual Printer Passive Address set to: ${VIRTUAL_PRINTER_PASV_ADDRESS}"
+fi
+
+if bashio::config.has_value 'obico_ml_url'; then
+  url=$(bashio::config 'obico_ml_url')
+  if [[ ! "$url" =~ ^https?:// ]]; then
+    url="http://$url"
+  fi
+  export OBICO_ML_URL="$url"
+  bashio::log.info "Obico ML URL set to: ${OBICO_ML_URL}"
+fi
+
+bashio::log.info 'Synchronizing settings to database...'
+python3 /app/scripts/init_settings.py
+
+export HA_URL="http://supervisor/core"
+export HA_TOKEN="${SUPERVISOR_TOKEN}"
+
+bashio::log.info 'Start Bambuddy ...'
+uvicorn backend.app.main:app --host 0.0.0.0 --port 8000 --loop asyncio
