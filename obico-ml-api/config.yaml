@@ -1,5 +1,5 @@
 name: "Obico ML API (Bambuddy)"
-version: "1.4-0.1.1"
+version: "1.4-0.1.2"
 slug: bambuddy_obico_ml
 description: "A headless Obico ML API sidecar container for local AI print-failure detection in Bambuddy."
 url: "https://github.com/connormxy/homeassistant-addon-bambuddy"
