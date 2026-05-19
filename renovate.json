@@ -4,11 +4,12 @@
     "config:base"
   ],
   "baseBranches": ["dev"],
+  "ignoreDeps": ["gunicorn", "newrelic"],
   "customManagers": [
     {
       "customType": "regex",
-      "fileMatch": ["^bambuddy/build\\.yaml$"],
-      "matchStrings": ["BAMBUDDY_VERSION:\\s*\"(?<currentValue>.*?)\""],
+      "fileMatch": ["^bambuddy/Dockerfile$"],
+      "matchStrings": ["ARG BAMBUDDY_VERSION=\"(?<currentValue>.*?)\""],
       "depNameTemplate": "maziggy/bambuddy",
       "datasourceTemplate": "github-releases"
     },
