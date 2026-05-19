@@ -6,6 +6,10 @@
 # ==============================================================================
 declare -a options
 
+if bashio::config.has_value 'draw_bounding_boxes'; then
+  export DRAW_BOUNDING_BOXES=$(bashio::config 'draw_bounding_boxes')
+fi
+
 bashio::log.info 'Starting Obico ML REST API server...'
 
 exec gunicorn --bind 0.0.0.0:3333 --chdir /app --limit-request-line 0 --workers 1 wsgi

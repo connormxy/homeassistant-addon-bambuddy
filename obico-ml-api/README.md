@@ -11,7 +11,7 @@ The core AI engine is powered by the open-source **[Obico Server](https://github
 
 ## Features
 - Full local AI failure detection based on official Obico ML 1.4 models.
-- Enhanced `/detect/` endpoint for returning pre-annotated bounding box snapshots.
+- Enhanced `/detect/` endpoint for returning pre-annotated bounding box snapshots (can be toggled off via config).
 - Seamless integration with the Bambuddy add-on.
 
 ## Installation

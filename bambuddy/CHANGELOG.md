@@ -4,6 +4,19 @@
 
 All notable changes to the App will be documented in this file.
 
+## [0.2.4.1-0.2] - 2026-05-19
+
+*(Note: Version number has been rolled over from `-9.1` in preparation for an impending restructuring of the development workflow.)*
+
+### Obico ML AI Integration
+- **MQTT Auto-Discovery**: Implemented fully native Home Assistant Auto-Discovery for the Obico ML integration. Bambuddy now automatically pushes and registers `obico_monitoring`, `obico_active`, and `obico_failed` as binary sensors directly tied to the printer device.
+- **State Persistence (Anti-Strobe)**: Added intelligent `_failure_latched` state tracking. If a failure is detected, the failure and monitoring states persist through a print pause (even when the camera is not actively polling) to prevent chamber lights/automations from toggling off abruptly.
+
+### Configuration & Sanitization
+- **URL Auto-Correction**: Added runtime sanitization for `obico_ml_url`, `orcaslicer_api_url`, and `bambu_studio_api_url` to automatically prepend `http://` if a protocol was omitted.
+- **MQTT Broker Validation**: Added regex sanitization to the `mqtt_broker` config to strip out invalid protocols (e.g., `mqtt://`, `http://`) and trailing ports passed by the user, ensuring clean connection handoffs.
+- **UI Hints**: Updated `translations/en.yaml` to explicitly define how to format the URL and MQTT broker config inputs.
+
 ## [0.2.4.1-9.1] - 2026-05-18
 
 ### Documentation & UI

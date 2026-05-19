@@ -99,7 +99,10 @@ def failure_detect():
 
         detections = detect(net_main, img, thresh=threshold)
 
-        img_with_boxes = draw_bounding_boxes(img, detections)
+        if environ.get("DRAW_BOUNDING_BOXES", "true").lower() == "true":
+            img_with_boxes = draw_bounding_boxes(img, detections)
+        else:
+            img_with_boxes = img
 
         _, buffer = cv2.imencode('.jpg', img_with_boxes)
         img_with_boxes_base64 = base64.b64encode(buffer).decode('utf-8')
