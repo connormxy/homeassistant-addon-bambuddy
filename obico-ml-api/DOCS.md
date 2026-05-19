@@ -18,5 +18,4 @@ For Home Assistant Add-on users, the typical URL is:
 
 Bambuddy's internal polling logic uses the custom `/detect/` POST endpoint exposed by this sidecar, which allows it to receive failure snapshots with bounding boxes pre-drawn over the spaghetti or layer shifts, enhancing the notifications you receive in Home Assistant.
 
-### MQTT Sensor Automations
-*Note: The main Bambuddy application automatically translates the failure detection data sourced from this API into Home Assistant MQTT Auto-Discovery sensors (e.g., `obico_failed`, `obico_monitoring`). These sensors are created and managed entirely by the Bambuddy app wrapper, not this sidecar. See the main repository README for more configuration details on how to use them.*
+*(Note: The main Bambuddy application automatically translates the failure detection data sourced from this API into Home Assistant MQTT Auto-Discovery sensors like `obico_monitoring`. These sensors are created and managed entirely by the Bambuddy app wrapper, not this sidecar. See the main repository README for more details.)*

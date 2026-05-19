@@ -12,6 +12,7 @@ All notable changes to the App will be documented in this file.
 *(Note: Version number has been rolled over from `-9.1` in preparation for an impending restructuring of the development workflow.)*
 
 ### Obico ML AI Integration
+- **Bounding Boxes in Notifications**: Enhanced the Obico detection patches to request and pass along pre-drawn bounding boxes directly from the ML API, providing rich visual context in Home Assistant notifications when print failures occur.
 - **MQTT Auto-Discovery**: Implemented fully native Home Assistant Auto-Discovery for the Obico ML integration. Bambuddy now automatically pushes and registers `obico_monitoring`, `obico_active`, and `obico_failed` as binary sensors directly tied to the printer device.
 - **State Persistence (Anti-Strobe)**: Added intelligent `_failure_latched` state tracking. If a failure is detected, the failure and monitoring states persist through a print pause (even when the camera is not actively polling) to prevent chamber lights/automations from toggling off abruptly.
 
