@@ -4,11 +4,11 @@
   <img src="https://github.com/connormxy/homeassistant-addon-bambuddy/blob/main/bambuddy/logo.png?raw=true" alt="Bambuddy Logo" width="300">
 </p>
 
-# Bambuddy – Home Assistant Add-on Repository
+# Bambuddy – Home Assistant App Repository
 
-[Bambuddy](https://github.com/maziggy/bambuddy) wrapped inside a Home Assistant add-on, with companion Slicer API sidecars.
+[Bambuddy](https://github.com/maziggy/bambuddy) wrapped inside a Home Assistant App (formerly Add-on), with companion Slicer API and Failure Detection sidecars.
 
-A self-hosted print archive and management system for Bambu Lab 3D printers, with NEW automatic slicing compatibility.
+A self-hosted print archive and management system for Bambu Lab 3D printers, with NEW automatic slicing compatibility. For easy deployment on HAOS devices.
 
 ![Supports aarch64 Architecture][aarch64-shield] ![Supports amd64 Architecture][amd64-shield] ![Supports armhf Architecture][armhf-shield] ![Supports armv7 Architecture][armv7-shield] ![Supports i386 Architecture][i386-shield]
 
@@ -19,9 +19,8 @@ A self-hosted print archive and management system for Bambu Lab 3D printers, wit
 [i386-shield]: https://img.shields.io/badge/i386-yes-green.svg
 
 **Dev Branch:** [![Open your Home Assistant instance and show the add app repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Fconnormxy%2Fhomeassistant-addon-bambuddy#dev)
----
 
-## What This Add-on Provides
+## What This App Provides
 
 This repository delivers a **multi-app ecosystem** for running Bambuddy on Home Assistant OS with minimal setup:
 
