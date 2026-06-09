@@ -1,5 +1,6 @@
-﻿--- backend/app/services/obico_detection.py
-+++ backend/app/services/obico_detection.py
+diff --git a/backend/app/services/obico_detection.py b/backend/app/services/obico_detection.py
+--- a/backend/app/services/obico_detection.py
++++ b/backend/app/services/obico_detection.py
 @@ -87,6 +87,8 @@
          self._last_class: dict[int, str] = {}
          # printer_id -> whether an action has already been fired for the current print
@@ -9,15 +10,15 @@
          # Global detection event log (most-recent-first)
          self._history: deque = deque(maxlen=HISTORY_MAX)
          self._last_error: str | None = None
-@@ -311,6 +313,7 @@
+@@ -325,6 +327,7 @@
  
          if verdict == "failure" and not self._action_fired.get(printer_id):
              self._action_fired[printer_id] = True
 +            self._failure_latched[printer_id] = True
-             await self._dispatch_action(printer_id, settings["action"], task_name, score)
+             await self._dispatch_action(printer_id, settings["action"], task_name, score, img_with_detections)
  
-     async def _dispatch_action(self, printer_id: int, action: str, task_name: str, score: float):
-@@ -330,6 +333,10 @@
+     async def _dispatch_action(self, printer_id: int, action: str, task_name: str, score: float, image_data: bytes | None = None):
+@@ -344,6 +347,10 @@
  
      # ---- queries ----
  
@@ -25,11 +26,12 @@
 +        """Return True if the printer is actively being monitored for failure detection."""
 +        return printer_id in self._states and self._task is not None and not self._task.done()
 +
-     def get_status(self) -> dict:
-         low, high = thresholds("medium")
-         return {
---- backend/app/services/mqtt_relay.py
-+++ backend/app/services/mqtt_relay.py
+     def get_status(self, sensitivity: str = "medium") -> dict:
+         # Report the thresholds for the configured sensitivity, not a hardcoded
+         # "medium" — otherwise the Status panel always shows the medium row
+diff --git a/backend/app/services/mqtt_relay.py b/backend/app/services/mqtt_relay.py
+--- a/backend/app/services/mqtt_relay.py
++++ b/backend/app/services/mqtt_relay.py
 @@ -37,6 +37,7 @@
          self._smart_plug_service = None  # Lazy import to avoid circular dependency
          self._settings: dict = {}  # Store settings for smart plug service
@@ -99,7 +101,7 @@
          # Build status payload from PrinterState
          payload = {
              "printer_id": printer_id,
-@@ -258,5 +303,8 @@
+@@ -258,6 +303,9 @@
              "printer_serial": printer_serial,
              "timestamp": datetime.now(timezone.utc).isoformat(),
 +            "obico_active": is_active,

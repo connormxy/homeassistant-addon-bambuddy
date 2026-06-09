@@ -1,4 +1,4 @@
-﻿diff --git a/backend/app/services/obico_actions.py b/backend/app/services/obico_actions.py
+diff --git a/backend/app/services/obico_actions.py b/backend/app/services/obico_actions.py
 index 2470245c..af1c7971 100644
 --- a/backend/app/services/obico_actions.py
 +++ b/backend/app/services/obico_actions.py

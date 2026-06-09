@@ -1,4 +1,5 @@
-﻿--- a/backend/app/services/notification_service.py
+diff --git a/backend/app/services/notification_service.py b/backend/app/services/notification_service.py
+--- a/backend/app/services/notification_service.py
 +++ b/backend/app/services/notification_service.py
 @@ -588,6 +588,10 @@
          payload = {
