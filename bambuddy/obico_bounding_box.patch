@@ -60,8 +60,8 @@ index c97a4456..471bef58 100644
 -        external_url = settings.get("external_url") or ""
 -        if not external_url:
 -            self._last_error = (
--                "external_url setting is empty ΓÇö Obico's ML API needs a reachable URL to fetch the snapshot from. "
--                "Set Settings ΓåÆ General ΓåÆ External URL."
+-                "external_url setting is empty — Obico's ML API needs a reachable URL to fetch the snapshot from. "
+-                "Set Settings → General → External URL."
 -            )
 +        ml_url_base = settings.get("ml_url", "").rstrip("/")
 +        if not ml_url_base:
@@ -105,8 +105,8 @@ index c97a4456..471bef58 100644
 +            external_url = settings.get("external_url") or ""
 +            if not external_url:
 +                self._last_error = (
-+                    "external_url setting is empty ΓÇö Obico's ML API needs a reachable URL to fetch the snapshot from. "
-+                    "Set Settings ΓåÆ General ΓåÆ External URL."
++                    "external_url setting is empty — Obico's ML API needs a reachable URL to fetch the snapshot from. "
++                    "Set Settings → General → External URL."
 +                )
 +                logger.warning(self._last_error)
 +                return
