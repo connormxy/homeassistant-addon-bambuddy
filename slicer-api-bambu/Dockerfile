@@ -30,7 +30,7 @@ RUN if [ "$TARGETARCH" = "arm64" ]; then \
 RUN npm ci
 RUN npm run build
 
-FROM ubuntu:22.04
+FROM ubuntu:26.04
 
 RUN apt-get update \
     && apt-get upgrade -y \
