@@ -1,6 +1,9 @@
 # Changelog
 
-## 1.4-0.1.3
+## [1.4-0.1.4] - 2026-06-09
+- **Fix**: The `lib` directory was missing from the repository because it was excluded by the root `.gitignore`. It has now been force-added, allowing the Python server to start successfully.
+
+## [1.4-0.1.3] - 2026-06-09
 - **Bugfix**: Fixed a `Permission denied` (exit code 126) error that prevented the add-on from starting by ensuring `s6-overlay` startup scripts are properly marked as executable.
 
 ## 1.4-0.1.2
