@@ -21,11 +21,7 @@ options:
   orcaslicer_api_url: "http://127.0.0.1:3003"
   bambu_studio_api_url: "http://127.0.0.1:3001"
   preferred_slicer: "bambu_studio"
-  mfa_encryption_key: ""
-  database_url: ""
-  virtual_printer_pasv_address: ""
   obico_ml_url: ""
-  bambuddy_external_roots: ""
 schema:
   debug: bool
   orcaslicer_api_url: str?
