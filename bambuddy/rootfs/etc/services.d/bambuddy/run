@@ -6,47 +6,60 @@
 declare debug
 debug=$(bashio::config 'debug')
 
+SLUG=$(bashio::addon.slug || echo "bambuddy")
+if [[ "${SLUG}" == *"dev"* ]]; then
+    SHARE_DIR="/share/bambuddy-dev"
+else
+    SHARE_DIR="/share/bambuddy"
+fi
+bashio::log.info "Using share directory: ${SHARE_DIR}"
+
 bashio::log.info 'Setting up data directories'
 
 mkdir -p /config/data
 mkdir -p /config/logs
 
-mkdir -p /share/bambuddy/archive
-mkdir -p /share/bambuddy/virtual_printer
-mkdir -p /share/bambuddy/backups
-mkdir -p /share/bambuddy/firmware
+mkdir -p ${SHARE_DIR}/archive
+mkdir -p ${SHARE_DIR}/virtual_printer
+mkdir -p ${SHARE_DIR}/backups
+mkdir -p ${SHARE_DIR}/firmware
 
-if [ -d /share/bambuddy/data ]; then
-  bashio::log.info "Migrating data from old /share/bambuddy/data structure..."
+if [ -d ${SHARE_DIR}/data ]; then
+  bashio::log.info "Migrating data from old ${SHARE_DIR}/data structure..."
   
-  if ls /share/bambuddy/data/bambuddy.db* 1> /dev/null 2>&1; then
-    mv /share/bambuddy/data/bambuddy.db* /config/data/ 2>/dev/null || true
+  if ls ${SHARE_DIR}/data/bambuddy.db* 1> /dev/null 2>&1; then
+    mv ${SHARE_DIR}/data/bambuddy.db* /config/data/ 2>/dev/null || true
   fi
   
-  if [ -d /share/bambuddy/data/archive ]; then
-    cp -r /share/bambuddy/data/archive/* /share/bambuddy/archive/ 2>/dev/null || true
+  if [ -d ${SHARE_DIR}/data/archive ]; then
+    cp -r ${SHARE_DIR}/data/archive/* ${SHARE_DIR}/archive/ 2>/dev/null || true
   fi
   
-  if [ -d /share/bambuddy/data/virtual_printer ]; then
-    cp -r /share/bambuddy/data/virtual_printer/* /share/bambuddy/virtual_printer/ 2>/dev/null || true
+  if [ -d ${SHARE_DIR}/data/virtual_printer ]; then
+    cp -r ${SHARE_DIR}/data/virtual_printer/* ${SHARE_DIR}/virtual_printer/ 2>/dev/null || true
   fi
   
-  if [ -d /share/bambuddy/data/backups ]; then
-    cp -r /share/bambuddy/data/backups/* /share/bambuddy/backups/ 2>/dev/null || true
+  if [ -d ${SHARE_DIR}/data/backups ]; then
+    cp -r ${SHARE_DIR}/data/backups/* ${SHARE_DIR}/backups/ 2>/dev/null || true
   fi
   
-  if [ -d /share/bambuddy/data/firmware ]; then
-    cp -r /share/bambuddy/data/firmware/* /share/bambuddy/firmware/ 2>/dev/null || true
+  if [ -d ${SHARE_DIR}/data/firmware ]; then
+    cp -r ${SHARE_DIR}/data/firmware/* ${SHARE_DIR}/firmware/ 2>/dev/null || true
   fi
   
-  mv /share/bambuddy/data/* /config/data/ 2>/dev/null || true
+  mv ${SHARE_DIR}/data/* /config/data/ 2>/dev/null || true
   
-  if [ -d /share/bambuddy/logs ]; then
-    mv /share/bambuddy/logs/* /config/logs/ 2>/dev/null || true
-    rm -rf /share/bambuddy/logs
+  if [ -d ${SHARE_DIR}/logs ]; then
+    mv ${SHARE_DIR}/logs/* /config/logs/ 2>/dev/null || true
+    rm -rf ${SHARE_DIR}/logs
   fi
-  
-  rm -rf /share/bambuddy/data
+  if [ -f /config/data/bambuddy.db ]; then
+    bashio::log.info "Migration successful. Cleaning up old data directory..."
+    rm -rf ${SHARE_DIR}/data
+  else
+    bashio::log.warning "Migration may have been incomplete. Renaming old data directory to data.bak for safety."
+    mv ${SHARE_DIR}/data ${SHARE_DIR}/data.bak 2>/dev/null || true
+  fi
 fi
 
 rm -rf /config/data/archive
@@ -54,10 +67,10 @@ rm -rf /config/data/virtual_printer
 rm -rf /config/data/backups
 rm -rf /config/data/firmware
 
-ln -s /share/bambuddy/archive /config/data/archive
-ln -s /share/bambuddy/virtual_printer /config/data/virtual_printer
-ln -s /share/bambuddy/backups /config/data/backups
-ln -s /share/bambuddy/firmware /config/data/firmware
+ln -s ${SHARE_DIR}/archive /config/data/archive
+ln -s ${SHARE_DIR}/virtual_printer /config/data/virtual_printer
+ln -s ${SHARE_DIR}/backups /config/data/backups
+ln -s ${SHARE_DIR}/firmware /config/data/firmware
 
 rm -rf /app/data
 rm -rf /app/logs
