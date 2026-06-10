@@ -14,6 +14,7 @@ mkdir -p /config/logs
 mkdir -p /share/bambuddy/archive
 mkdir -p /share/bambuddy/virtual_printer
 mkdir -p /share/bambuddy/backups
+mkdir -p /share/bambuddy/firmware
 
 if [ -d /share/bambuddy/data ]; then
   bashio::log.info "Migrating data from old /share/bambuddy/data structure..."
@@ -34,6 +35,10 @@ if [ -d /share/bambuddy/data ]; then
     cp -r /share/bambuddy/data/backups/* /share/bambuddy/backups/ 2>/dev/null || true
   fi
   
+  if [ -d /share/bambuddy/data/firmware ]; then
+    cp -r /share/bambuddy/data/firmware/* /share/bambuddy/firmware/ 2>/dev/null || true
+  fi
+  
   mv /share/bambuddy/data/* /config/data/ 2>/dev/null || true
   
   if [ -d /share/bambuddy/logs ]; then
@@ -47,10 +52,12 @@ fi
 rm -rf /config/data/archive
 rm -rf /config/data/virtual_printer
 rm -rf /config/data/backups
+rm -rf /config/data/firmware
 
 ln -s /share/bambuddy/archive /config/data/archive
 ln -s /share/bambuddy/virtual_printer /config/data/virtual_printer
 ln -s /share/bambuddy/backups /config/data/backups
+ln -s /share/bambuddy/firmware /config/data/firmware
 
 rm -rf /app/data
 rm -rf /app/logs
