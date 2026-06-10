@@ -1,10 +1,9 @@
 # https://developers.home-assistant.io/docs/add-ons/configuration#add-on-config
-name: Bambuddy (DEV)
+name: Bambuddy
 version: "0.2.4.6.3"
-slug: bambuddy-dev
-stage: experimental
-description: "(DEV) Bambuddy is a powerful, self-hosted print archive and management system for Bambu Lab 3D printers."
-url: "https://github.com/connormxy/homeassistant-addon-bambuddy#dev"
+slug: bambuddy
+description: "Bambuddy is a powerful, self-hosted print archive and management system for Bambu Lab 3D printers."
+url: "https://github.com/connormxy/homeassistant-addon-bambuddy"
 arch:
   - armhf
   - armv7
