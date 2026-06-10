@@ -1,5 +1,9 @@
 # Changelog
 
+## 02.07.01.57.2
+- Added native healthchecks to accurately reflect container startup state
+
+
 All notable changes to the App will be documented in this file.
 
 ## [02.07.01.57.1] - 2026-06-10
