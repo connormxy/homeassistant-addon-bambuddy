@@ -1,9 +1,9 @@
-name: "Obico ML API (Bambuddy) (DEV)"
+name: "Obico ML API (Bambuddy)"
 version: "1.4.2"
-slug: bambuddy_obico_ml_dev
+slug: bambuddy_obico_ml
 stage: experimental
 description: "(DEV) A headless Obico ML API sidecar container for local AI print-failure detection in Bambuddy."
-url: "https://github.com/connormxy/homeassistant-addon-bambuddy#dev"
+url: "https://github.com/connormxy/homeassistant-addon-bambuddy"
 arch:
   - aarch64
   - amd64
