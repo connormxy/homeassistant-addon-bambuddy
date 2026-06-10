@@ -6,6 +6,8 @@ description: "(DEV) A headless Bambu Studio API sidecar container for Bambuddy A
 url: "https://github.com/connormxy/homeassistant-addon-bambuddy#dev"
 arch:
   - amd64
+startup: services
+boot: auto
 init: false
 map:
   - share:rw
@@ -13,3 +15,9 @@ ports:
   3001/tcp: 3001
 ports_description:
   3001/tcp: Bambu Studio API Port (use this in Bambuddy settings)
+
+healthcheck:
+  enabled: true
+  interval: 30s
+  timeout: 5s
+  retries: 3
