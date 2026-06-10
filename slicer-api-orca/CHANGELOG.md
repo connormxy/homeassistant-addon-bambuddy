@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.3.2.2
+- Added native healthchecks to accurately reflect container startup state
+
+
 All notable changes to the App will be documented in this file.
 
 ## [2.3.2.1] - 2026-06-10
