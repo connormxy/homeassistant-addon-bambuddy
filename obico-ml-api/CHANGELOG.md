@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.4-0.1.4] - 2026-06-09
+## [1.4.2] - 2026-06-10
 - **Fix**: The `lib` directory was missing from the repository because it was excluded by the root `.gitignore`. It has now been force-added, allowing the Python server to start successfully.
 
 ## [1.4-0.1.3] - 2026-06-09
