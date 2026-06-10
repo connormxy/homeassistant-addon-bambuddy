@@ -5,7 +5,7 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("init_settings")
 
-DB_PATH = "/share/bambuddy/data/bambuddy.db"
+DB_PATH = "/config/data/bambuddy.db"
 
 def upsert_setting(cursor, key, value):
     """Insert or update a single setting. Skips None/empty values."""

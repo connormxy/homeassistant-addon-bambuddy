@@ -2,6 +2,11 @@
 
 # Changelog
 
+## 0.2.4.6.3
+- Fixed `init_settings.py` to point to the new secure database location at `/config/data/bambuddy.db`
+- Prepopulated Obico ML URL with sidecar default port for zero-config onboarding
+
+
 All notable changes to the App will be documented in this file.
 
 ## [0.2.4.6.2] - 2026-06-10
