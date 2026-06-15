@@ -1,5 +1,5 @@
 # https://developers.home-assistant.io/docs/add-ons/configuration#add-on-dockerfile
-ARG BAMBUDDY_VERSION="0.2.4.6"
+ARG BAMBUDDY_VERSION="0.2.4.7"
 ARG BUILD_ARCH
 ARG BUILD_FROM="ghcr.io/home-assistant/${BUILD_ARCH}-base-python:3.11-alpine3.21"
 
@@ -36,10 +36,10 @@ RUN --mount=type=cache,target=/root/.cache/pip \
   pip install --root-user-action=ignore --upgrade pip \
   && echo "numpy<2" > /tmp/constraints.txt \
   && pip install --root-user-action=ignore \
-     --find-links https://wheels.home-assistant.io/musllinux/ \
-     --prefer-binary \
-     -c /tmp/constraints.txt \
-     -r requirements.txt
+  --find-links https://wheels.home-assistant.io/musllinux/ \
+  --prefer-binary \
+  -c /tmp/constraints.txt \
+  -r requirements.txt
 
 COPY --from=builder /app /app
 
