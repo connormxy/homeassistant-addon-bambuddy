@@ -4,6 +4,10 @@
 
 All notable changes to the App will be documented in this file.
 
+## [0.2.4.7] - 2026-06-15
+
+- **Upstream Bump**: Updated base Bambuddy image to `0.2.4.7`.
+
 ## [0.2.4.6.4] - 2026-06-10
 **⚠️ We strongly recommend creating a full backup before updating. If you're upgrading from below 0.2.4.5, pay special attention if you access your `/share/bambuddy` files from an external device/sync, or if you previously mounted external folders into Bambuddy!**
 
