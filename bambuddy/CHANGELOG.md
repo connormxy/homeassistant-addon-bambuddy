@@ -4,6 +4,10 @@
 
 All notable changes to the App will be documented in this file.
 
+## [0.2.4.8] - 2026-06-29
+
+- **Upstream Bump**: Updated base Bambuddy image to `0.2.4.8`. Features include SSO and an update to the printer card UI. See the [maziggy changelog](https://github.com/maziggy/bambuddy/releases) for full details.
+
 ## [0.2.4.7] - 2026-06-15
 
 - **Upstream Bump**: Updated base Bambuddy image to `0.2.4.7`.
