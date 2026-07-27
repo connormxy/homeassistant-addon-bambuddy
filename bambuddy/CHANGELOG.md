@@ -6,10 +6,15 @@ All notable changes to the App will be documented in this file.
 
 ## [1.2.5] - 2026-07-27
 
-- **Upstream Bump**: Updated base Bambuddy image to `1.2.5` to bring in stability improvements and critical UI/UX bug fixes.
-- **Debian Migration**: Moved from Alpine to Debian Bookworm, permanently resolving OpenCV-related memory exhaustion and compilation crashes.
+- **Upstream Bump**: Updated base Bambuddy image to `1.2.5`. This is a massive feature release from upstream! Highlights include:
+  - **Auto Bed Leveling/Flow Calibration**: Now supports "Auto" mode matching Bambu Studio exactly.
+  - **Live Virtual Printer Progress**: Full live print progress is now sent to Bambu Studio / OrcaSlicer for Virtual Printers.
+  - **G-code Injection**: Per-VP toggle for start/end G-code snippets.
+  - **Fixes**: Fixed finish photo capturing a dropped bed, various Virtual Printer connection bugs, and AMS slot UI glitches.
+  - For full details on all upstream features, check out the [Upstream Bambuddy Changelog](https://github.com/maziggy/bambuddy/blob/main/CHANGELOG.md) and [Bambuddy README](https://github.com/maziggy/bambuddy).
+- **Debian Migration & Python 3.13**: Migrated the base OS from Alpine to Debian Bookworm, unlocking pre-compiled Python wheels. This allowed us to max out the runtime to **Python 3.13** (from 3.11) and permanently resolved all OpenCV-related memory exhaustion and compilation crashes.
 - **Modernization**: Transitioned s6-overlay to v3 and implemented graceful shutdowns via `exec uvicorn`.
-- **Fix**: Re-calculated and updated Python patch offsets for 1.2.5 codebase.
+- **Fix**: Re-calculated and updated custom Python patch offsets for the 1.2.5 codebase.
 
 ## [0.2.4.8.1] - 2026-07-02
 
