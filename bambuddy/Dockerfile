@@ -1,7 +1,7 @@
 # https://developers.home-assistant.io/docs/add-ons/configuration#add-on-dockerfile
 ARG BAMBUDDY_VERSION="1.2.5"
 ARG BUILD_ARCH
-ARG BUILD_FROM="ghcr.io/home-assistant/${BUILD_ARCH}-base-python:3.11-bookworm"
+ARG BUILD_FROM="ghcr.io/home-assistant/${BUILD_ARCH}-base-python:3.13-bookworm"
 
 FROM ghcr.io/maziggy/bambuddy:${BAMBUDDY_VERSION} AS builder
 FROM $BUILD_FROM
