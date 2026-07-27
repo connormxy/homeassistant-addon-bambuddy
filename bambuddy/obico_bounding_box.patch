@@ -1,6 +1,8 @@
+diff --git a/backend/app/services/obico_actions.py b/backend/app/services/obico_actions.py
+index aaea5ed5..ef4d61b5 100644
 --- a/backend/app/services/obico_actions.py
 +++ b/backend/app/services/obico_actions.py
-@@ -13,7 +13,7 @@
+@@ -13,7 +13,7 @@ from backend.app.models.printer import Printer
  logger = logging.getLogger(__name__)
  
  
@@ -9,7 +11,7 @@
      """Run the configured action for a detected print failure.
  
      action: 'notify' | 'pause' | 'pause_and_off'
-@@ -26,7 +26,7 @@
+@@ -26,7 +26,7 @@ async def execute_action(printer_id: int, action: str, task_name: str, score: fl
      if action == "pause_and_off":
          await _turn_off_linked_plugs(printer_id)
  
@@ -18,7 +20,7 @@
  
  
  async def _get_printer_name(printer_id: int) -> str:
-@@ -63,7 +63,7 @@
+@@ -63,7 +63,7 @@ async def _turn_off_linked_plugs(printer_id: int) -> None:
                  logger.error("Obico action: failed to turn off plug %s: %s", plug.name, e)
  
  
@@ -27,7 +29,7 @@
      """Fire the AI Failure Detection notification (#1794).
  
      Routed to its own event in 0.2.5b1; previously rode the multiplexed
-@@ -81,6 +81,7 @@
+@@ -81,6 +81,7 @@ async def _notify(printer_id: int, printer_name: str, task_name: str, score: flo
                  confidence=score,
                  action=action,
                  db=db,
@@ -35,9 +37,20 @@
              )
          except Exception as e:
              logger.error("Obico notify failed for printer %s: %s", printer_id, e)
+diff --git a/backend/app/services/obico_detection.py b/backend/app/services/obico_detection.py
+index 44ed6f3d..639e533f 100644
 --- a/backend/app/services/obico_detection.py
 +++ b/backend/app/services/obico_detection.py
-@@ -239,41 +239,67 @@
+@@ -87,6 +87,8 @@ class ObicoDetectionService:
+         self._last_class: dict[int, str] = {}
+         # printer_id -> whether an action has already been fired for the current print
+         self._action_fired: dict[int, bool] = {}
++        # printer_id -> whether a failure action was dispatched (persists during pause)
++        self._failure_latched: dict[int, bool] = {}
+         # Global detection event log (most-recent-first)
+         self._history: deque = deque(maxlen=HISTORY_MAX)
+         self._last_error: str | None = None
+@@ -239,41 +241,67 @@ class ObicoDetectionService:
              self._state_keys[printer_id] = key
              self._action_fired[printer_id] = False
  
@@ -95,8 +108,6 @@
 -            self._last_error = f"ML API call failed for printer {printer_id}: {detail}"
 -            logger.warning(self._last_error)
 -            return
--
--        detections = payload.get("detections", []) if isinstance(payload, dict) else []
 +            logger.debug("POST /detect/ failed (%s), falling back to GET /p/", e)
 +
 +        if not detect_success:
@@ -112,7 +123,8 @@
 +            nonce = await stash_frame(frame)
 +            snapshot_url = f"{external_url}/api/v1/obico/cached-frame/{nonce}"
 +            ml_url = f"{ml_url_base}/p/"
-+
+ 
+-        detections = payload.get("detections", []) if isinstance(payload, dict) else []
 +            try:
 +                async with httpx.AsyncClient(timeout=DETECTION_TIMEOUT) as client:
 +                    resp = await client.get(ml_url, params={"img": snapshot_url})
@@ -127,20 +139,20 @@
          current_p = score_from_detections(detections)
          state = self._states[printer_id]
          score = state.update(current_p)
-@@ -300,9 +326,9 @@
+@@ -300,9 +328,10 @@ class ObicoDetectionService:
  
          if verdict == "failure" and not self._action_fired.get(printer_id):
              self._action_fired[printer_id] = True
 -            await self._dispatch_action(printer_id, settings["action"], task_name, score)
--
--    async def _dispatch_action(self, printer_id: int, action: str, task_name: str, score: float):
++            self._failure_latched[printer_id] = True
 +            await self._dispatch_action(printer_id, settings["action"], task_name, score, img_with_detections)
-+
+ 
+-    async def _dispatch_action(self, printer_id: int, action: str, task_name: str, score: float):
 +    async def _dispatch_action(self, printer_id: int, action: str, task_name: str, score: float, image_data: bytes | None = None):
          from backend.app.services.obico_actions import execute_action
  
          logger.warning(
-@@ -313,7 +339,7 @@
+@@ -313,13 +342,17 @@ class ObicoDetectionService:
              action,
          )
          try:
@@ -149,3 +161,13 @@
          except Exception as e:
              self._last_error = f"Action dispatch failed: {e or type(e).__name__}"
              logger.error(self._last_error)
+ 
+     # ---- queries ----
+ 
++    def is_monitoring(self, printer_id: int) -> bool:
++        """Return True if the printer is actively being monitored for failure detection."""
++        return printer_id in self._states and self._task is not None and not self._task.done()
++
+     def get_status(self, sensitivity: str = "medium") -> dict:
+         # Report the thresholds for the configured sensitivity, not a hardcoded
+         # "medium" — otherwise the Status panel always shows the medium row

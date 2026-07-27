@@ -1,8 +1,8 @@
-diff --git a/backend/app/services/notification_service.py b/backend/app/services/notification_service.py
+﻿diff --git a/backend/app/services/notification_service.py b/backend/app/services/notification_service.py
+index e4b64a4b..06aaaa59 100644
 --- a/backend/app/services/notification_service.py
 +++ b/backend/app/services/notification_service.py
-@@ -588,6 +588,10 @@
-         payload = {
+@@ -740,6 +740,11 @@ class NotificationService:
              "title": title,
              "message": message,
          }
@@ -10,5 +10,7 @@ diff --git a/backend/app/services/notification_service.py b/backend/app/services
 +            payload["entity_id"] = service
 +            endpoint = "api/services/notify/send_message"
 +            url = f"{ha_url.rstrip('/')}/{endpoint}"
++
  
          client = await self._get_client()
+         response = await client.post(url, json=payload, headers=headers)

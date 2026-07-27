@@ -1,7 +1,7 @@
 # https://developers.home-assistant.io/docs/add-ons/configuration#add-on-dockerfile
-ARG BAMBUDDY_VERSION="0.2.4.8"
-ARG BUILD_ARCH
-ARG BUILD_FROM="ghcr.io/home-assistant/${BUILD_ARCH}-base-python:3.11-alpine3.21"
+ARG BAMBUDDY_VERSION="1.2.5"
+ARG BUILD_ARCH=amd64
+ARG BUILD_FROM="ghcr.io/home-assistant/${BUILD_ARCH}-base-debian:bookworm"
 
 FROM ghcr.io/maziggy/bambuddy:${BAMBUDDY_VERSION} AS builder
 FROM $BUILD_FROM
@@ -15,28 +15,26 @@ LABEL \
 WORKDIR /app
 
 # Install system dependencies
-# NOTE: py3-opencv is NOT used — it installs cv2 into Alpine's system Python,
-# but HA's Python lives in /usr/local and never sees it. Instead we pip-install
-# opencv-python-headless from HA's precompiled musllinux wheels below.
-RUN apk add --no-cache \
-  build-base \
+RUN apt-get update && apt-get install -y --no-install-recommends \
+  python3 \
+  python3-pip \
+  python3-venv \
+  build-essential \
   curl \
   ffmpeg \
-  libstdc++ \
-  libjpeg-turbo \
-  libpng \
-  tiff \
-  libwebp
+  libstdc++6 \
+  libjpeg62-turbo \
+  libpng16-16 \
+  libtiff6 \
+  libwebp7 \
+  && rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies with cache mount
-# --find-links pulls prebuilt musllinux wheels (including opencv-python-headless)
-# from Home Assistant's wheel server so nothing compiles from source.
 COPY --from=builder /app/requirements.txt ./
 RUN --mount=type=cache,target=/root/.cache/pip \
-  pip install --root-user-action=ignore --upgrade pip \
+  pip install --root-user-action=ignore --break-system-packages --upgrade pip \
   && echo "numpy<2" > /tmp/constraints.txt \
-  && pip install --root-user-action=ignore \
-  --find-links https://wheels.home-assistant.io/musllinux/ \
+  && pip install --root-user-action=ignore --break-system-packages \
   --prefer-binary \
   -c /tmp/constraints.txt \
   -r requirements.txt

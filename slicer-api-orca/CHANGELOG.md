@@ -1,5 +1,9 @@
 # Changelog
 
+## [2.4.2] - 2026-07-27
+- **Source Build**: Transitioned the build pipeline to compile natively from the upstream source repository instead of relying on pre-compiled images, ensuring better long-term reliability and flexibility.
+- **Debian Migration**: Moved base image to Debian Bookworm to natively resolve `libwebkit2gtk-4.1-0` dependencies.
+
 ## 2.3.2.2
 - Added native healthchecks to accurately reflect container startup state
 
