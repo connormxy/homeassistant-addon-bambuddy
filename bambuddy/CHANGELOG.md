@@ -14,6 +14,7 @@ All notable changes to the App will be documented in this file.
   - For full details on all upstream features, check out the [Upstream Bambuddy Changelog](https://github.com/maziggy/bambuddy/blob/main/CHANGELOG.md) and [Bambuddy README](https://github.com/maziggy/bambuddy).
 - **Debian Migration & Python 3.11**: Migrated the base OS from Alpine to Debian Bookworm, unlocking pre-compiled Python wheels. This allowed us to lock the runtime to the extremely stable **Python 3.11** and permanently resolved all OpenCV-related memory exhaustion and compilation crashes.
 - **Modernization**: Transitioned s6-overlay to v3 and implemented graceful shutdowns via `exec uvicorn`.
+- **Pre-Built Docker Containers**: Fully transitioned the release pipeline to use GitHub Actions and GHCR. Add-ons are now distributed as lightning-fast, pre-built Docker images, completely eliminating local compilation crashes and saving gigabytes of local storage.
 - **Fix**: Re-calculated and updated custom Python patch offsets for the 1.2.5 codebase.
 
 ## [0.2.4.8.1] - 2026-07-02
