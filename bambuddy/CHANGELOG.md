@@ -4,7 +4,7 @@
 
 All notable changes to the App will be documented in this file.
 
-## [1.2.5] - 2026-07-27
+## [1.2.5.0] - 2026-07-27
 
 - **Upstream Bump**: Updated base Bambuddy image to `1.2.5`. This is a massive feature release from upstream! Highlights include:
   - **Auto Bed Leveling/Flow Calibration**: Now supports "Auto" mode matching Bambu Studio exactly.
