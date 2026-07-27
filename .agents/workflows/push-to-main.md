@@ -4,7 +4,7 @@ description: Automates the process of graduating experimental `dev` changes into
 
 # Publish to Main (Release Pipeline)
 
-**Description**: Automates the process of graduating experimental `dev` changes into stable production releases on the `main` branch, ensuring all `(DEV)` branding, slugs, URLs, and experimental tags are stripped out before publishing.
+**Description**: Automates the process of graduating experimental `dev` changes into stable production releases on the `main` branch, ensuring all `(DEV)` branding, slugs, URLs, and experimental tags are stripped out before publishing. It also automatically triggers the GitHub Actions pipeline to pre-build the Docker images for end-users.
 
 ## Prerequisites
 
@@ -31,7 +31,7 @@ When requested to push changes to main or release a new stable version, run the 
 - `git merge dev --allow-unrelated-histories -X theirs`: Forcefully merges the dev changes, resolving any history mismatches by heavily favoring the `dev` branch's state.
 - `python scratch/publish_to_main.py`: Executes the custom python script that edits `config.yaml` and `README.md` to remove `slug: bambuddy-dev`, `(DEV)` names, experimental stages, and GitHub dev branch URL suffixes.
 - `git commit -am 'chore: prepare release'`: Commits the newly cleaned production files.
-- `git push origin main`: Pushes the stable release up to the GitHub repository, where Home Assistant users will receive the update.
+- `git push origin main`: Pushes the stable release up to the GitHub repository. **This will trigger the GitHub Action (`.github/workflows/builder.yaml`) to start building the new Docker images.** Wait for this Action to finish before users try to install the update.
 - `git checkout dev`: Safely drops you back into the development environment to continue working.
 
 > [!WARNING]

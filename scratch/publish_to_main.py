@@ -47,6 +47,11 @@ for config in configs:
         # Strip trailing modifiers like -0 or -dev from the version string
         content = re.sub(r'^(version:\s*".*?)-.*?"', r'\1"', content, flags=re.MULTILINE)
         
+        # Inject the pre-built GHCR image key
+        folder_name = config.split('/')[0]
+        if 'image:' not in content:
+            content += f'\nimage: "ghcr.io/connormxy/{folder_name}-{{arch}}"\n'
+        
         with open(config, 'w', encoding='utf-8') as f:
             f.write(content)
 
@@ -78,12 +83,6 @@ if os.path.exists(readme_path):
     
     with open(readme_path, 'w', encoding='utf-8') as f:
         f.write(content)
-
-import shutil
-github_dir = '.github'
-if os.path.exists(github_dir):
-    print("Stripping DEV auto-updater workflows by deleting .github directory...")
-    shutil.rmtree(github_dir)
 
 print("Done! The files are now ready to be pushed to main.")
 print("If you want to push this to main automatically, you can run:")
