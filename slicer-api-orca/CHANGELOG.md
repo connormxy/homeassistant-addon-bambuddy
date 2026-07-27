@@ -1,7 +1,9 @@
 # Changelog
 
-## [2.4.2] - 2026-07-27
-- **Source Build**: Transitioned the build pipeline to compile natively from the upstream source repository instead of relying on pre-compiled images, ensuring better long-term reliability and flexibility.
+## [2.4.2.0] - 2026-07-27
+
+- **Docker Containers**: Transitioned the release pipeline to use GitHub Actions and GHCR. The add-on is now distributed as a pre-built Docker image, reducing local installation time and storage requirements.
+- **Source Build**: Transitioned the build pipeline to compile natively from the upstream source repository, ensuring better long-term reliability and flexibility.
 - **Debian Migration**: Moved base image to Debian Bookworm to natively resolve `libwebkit2gtk-4.1-0` dependencies.
 
 ## 2.3.2.2

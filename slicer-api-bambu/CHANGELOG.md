@@ -1,9 +1,11 @@
 # Changelog
 
-## [02.07.01.62] - 2026-07-27
-- **Source Build**: Transitioned the build pipeline to compile natively from the upstream source repository. 
+## [02.07.01.62.0] - 2026-07-27
+
+- **Docker Containers**: Transitioned the release pipeline to use GitHub Actions and GHCR. The add-on is now distributed as a pre-built Docker image, reducing local installation time and storage requirements.
+- **Source Build**: Transitioned the build pipeline to compile natively from the upstream source repository, ensuring better long-term reliability and flexibility.
 - **Dynamic Download**: Re-engineered the Dockerfile to dynamically fetch the latest AppImage via the GitHub API, mitigating issues with opaque timestamps in filenames.
-- **Debian Migration**: Moved base image to Debian Bookworm.
+- **Debian Migration**: Moved base image to Debian Bookworm to natively resolve `libwebkit2gtk-4.1-0` dependencies.
 
 ## 02.07.01.57.2
 - Added native healthchecks to accurately reflect container startup state
