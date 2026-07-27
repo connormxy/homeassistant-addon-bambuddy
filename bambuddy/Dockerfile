@@ -23,7 +23,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   curl \
   ffmpeg \
   libstdc++6 \
-  libjpeg-turbo8 \
+  libjpeg62-turbo \
   libpng16-16 \
   libtiff6 \
   libwebp7 \

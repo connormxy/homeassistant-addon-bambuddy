@@ -1,6 +1,6 @@
 # Ubuntu + CUDA stuff
 # Map HA's BUILD_ARCH (e.g. aarch64) to the upstream image arch (e.g. arm64) natively
-ARG BUILD_ARCH
+ARG BUILD_ARCH=amd64
 ARG ML_VERSION="1.4"
 
 FROM thespaghettidetective/ml_api_base:${ML_VERSION}-linux-amd64 AS base-amd64
@@ -8,6 +8,7 @@ FROM thespaghettidetective/ml_api_base:${ML_VERSION}-linux-arm64 AS base-aarch64
 
 # Select the target base image
 FROM base-${BUILD_ARCH}
+ARG BUILD_ARCH
 
 ########################### HA ADDON SPECIFIC PART ###########################
 # Environment variables
