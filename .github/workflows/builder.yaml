@@ -11,64 +11,227 @@ permissions:
   id-token: write
 
 jobs:
-  build:
+  init:
     runs-on: ubuntu-latest
-    name: Build ${{ matrix.addon }} for ${{ matrix.arch }}
+    name: Initialize builds
+    outputs:
+      bambuddy: ${{ steps.bambuddy.outputs.matrix }}
+      obico: ${{ steps.obico.outputs.matrix }}
+      slicer_bambu: ${{ steps.slicer_bambu.outputs.matrix }}
+      slicer_orca: ${{ steps.slicer_orca.outputs.matrix }}
+    steps:
+      - name: Get bambuddy matrix
+        id: bambuddy
+        uses: home-assistant/builder/actions/prepare-multi-arch-matrix@master
+        with:
+          architectures: '["aarch64", "amd64"]'
+          image-name: bambuddy
+
+      - name: Get obico matrix
+        id: obico
+        uses: home-assistant/builder/actions/prepare-multi-arch-matrix@master
+        with:
+          architectures: '["aarch64", "amd64"]'
+          image-name: obico-ml-api
+
+      - name: Get slicer_bambu matrix
+        id: slicer_bambu
+        uses: home-assistant/builder/actions/prepare-multi-arch-matrix@master
+        with:
+          architectures: '["amd64"]'
+          image-name: slicer-api-bambu
+
+      - name: Get slicer_orca matrix
+        id: slicer_orca
+        uses: home-assistant/builder/actions/prepare-multi-arch-matrix@master
+        with:
+          architectures: '["aarch64", "amd64"]'
+          image-name: slicer-api-orca
+
+  # bambuddy
+  build_bambuddy:
+    name: Build bambuddy ${{ matrix.arch }}
+    needs: init
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
-      matrix:
-        addon: ["bambuddy", "obico-ml-api", "slicer-api-bambu", "slicer-api-orca"]
-        arch: ["aarch64", "amd64"]
-        exclude:
-          - addon: "slicer-api-bambu"
-            arch: "aarch64"
+      matrix: ${{ fromJSON(needs.init.outputs.bambuddy) }}
     steps:
       - uses: actions/checkout@v4
-      
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-        
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-          
-      - name: Get Add-on Version
+      - name: Get version
         id: version
         shell: bash
-        run: |
-          VERSION=$(grep -E '^version: ' ${{ matrix.addon }}/config.yaml | awk '{print $2}' | tr -d '"'\''\r')
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
-
-      - name: Set platform
-        id: platform
-        shell: bash
-        run: |
-          if [ "${{ matrix.arch }}" = "aarch64" ]; then
-            echo "platform=linux/arm64" >> $GITHUB_OUTPUT
-          elif [ "${{ matrix.arch }}" = "amd64" ]; then
-            echo "platform=linux/amd64" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Build and Push
-        uses: docker/build-push-action@v5
+        run: echo "version=$(grep -E '^version: ' bambuddy/config.yaml | awk '{print $2}' | tr -d '"'\''\r')" >> $GITHUB_OUTPUT
+      - name: Build image
+        uses: home-assistant/builder/actions/build-image@master
         with:
-          context: ${{ matrix.addon }}
-          platforms: ${{ steps.platform.outputs.platform }}
-          push: true
-          tags: |
-            ghcr.io/${{ github.repository_owner }}/${{ matrix.addon }}-${{ matrix.arch }}:latest
-            ghcr.io/${{ github.repository_owner }}/${{ matrix.addon }}-${{ matrix.arch }}:${{ steps.version.outputs.version }}
-          build-args: |
-            BUILD_ARCH=${{ matrix.arch }}
-            BUILD_VERSION=${{ steps.version.outputs.version }}
-          labels: |
-            io.hass.arch=${{ matrix.arch }}
-            io.hass.version=${{ steps.version.outputs.version }}
-            org.opencontainers.image.source=https://github.com/${{ github.repository }}
-            org.opencontainers.image.version=${{ steps.version.outputs.version }}
+          arch: ${{ matrix.arch }}
+          context: bambuddy
+          container-registry-password: ${{ secrets.GITHUB_TOKEN }}
+          image: ${{ matrix.image }}
+          image-tags: |
+            ${{ steps.version.outputs.version }}
+            latest
+          push: "true"
+          version: ${{ steps.version.outputs.version }}
+
+  manifest_bambuddy:
+    name: Publish bambuddy manifest
+    needs: [init, build_bambuddy]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Get version
+        id: version
+        shell: bash
+        run: echo "version=$(grep -E '^version: ' bambuddy/config.yaml | awk '{print $2}' | tr -d '"'\''\r')" >> $GITHUB_OUTPUT
+      - name: Publish manifest
+        uses: home-assistant/builder/actions/publish-multi-arch-manifest@master
+        with:
+          architectures: '["aarch64", "amd64"]'
+          container-registry-password: ${{ secrets.GITHUB_TOKEN }}
+          image-name: bambuddy
+          image-tags: |
+            ${{ steps.version.outputs.version }}
+            latest
+
+  # obico-ml-api
+  build_obico:
+    name: Build obico-ml-api ${{ matrix.arch }}
+    needs: init
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.init.outputs.obico) }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Get version
+        id: version
+        shell: bash
+        run: echo "version=$(grep -E '^version: ' obico-ml-api/config.yaml | awk '{print $2}' | tr -d '"'\''\r')" >> $GITHUB_OUTPUT
+      - name: Build image
+        uses: home-assistant/builder/actions/build-image@master
+        with:
+          arch: ${{ matrix.arch }}
+          context: obico-ml-api
+          container-registry-password: ${{ secrets.GITHUB_TOKEN }}
+          image: ${{ matrix.image }}
+          image-tags: |
+            ${{ steps.version.outputs.version }}
+            latest
+          push: "true"
+          version: ${{ steps.version.outputs.version }}
+
+  manifest_obico:
+    name: Publish obico-ml-api manifest
+    needs: [init, build_obico]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Get version
+        id: version
+        shell: bash
+        run: echo "version=$(grep -E '^version: ' obico-ml-api/config.yaml | awk '{print $2}' | tr -d '"'\''\r')" >> $GITHUB_OUTPUT
+      - name: Publish manifest
+        uses: home-assistant/builder/actions/publish-multi-arch-manifest@master
+        with:
+          architectures: '["aarch64", "amd64"]'
+          container-registry-password: ${{ secrets.GITHUB_TOKEN }}
+          image-name: obico-ml-api
+          image-tags: |
+            ${{ steps.version.outputs.version }}
+            latest
+
+  # slicer-api-bambu
+  build_slicer_bambu:
+    name: Build slicer-api-bambu ${{ matrix.arch }}
+    needs: init
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.init.outputs.slicer_bambu) }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Get version
+        id: version
+        shell: bash
+        run: echo "version=$(grep -E '^version: ' slicer-api-bambu/config.yaml | awk '{print $2}' | tr -d '"'\''\r')" >> $GITHUB_OUTPUT
+      - name: Build image
+        uses: home-assistant/builder/actions/build-image@master
+        with:
+          arch: ${{ matrix.arch }}
+          context: slicer-api-bambu
+          container-registry-password: ${{ secrets.GITHUB_TOKEN }}
+          image: ${{ matrix.image }}
+          image-tags: |
+            ${{ steps.version.outputs.version }}
+            latest
+          push: "true"
+          version: ${{ steps.version.outputs.version }}
+
+  manifest_slicer_bambu:
+    name: Publish slicer-api-bambu manifest
+    needs: [init, build_slicer_bambu]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Get version
+        id: version
+        shell: bash
+        run: echo "version=$(grep -E '^version: ' slicer-api-bambu/config.yaml | awk '{print $2}' | tr -d '"'\''\r')" >> $GITHUB_OUTPUT
+      - name: Publish manifest
+        uses: home-assistant/builder/actions/publish-multi-arch-manifest@master
+        with:
+          architectures: '["amd64"]'
+          container-registry-password: ${{ secrets.GITHUB_TOKEN }}
+          image-name: slicer-api-bambu
+          image-tags: |
+            ${{ steps.version.outputs.version }}
+            latest
+
+  # slicer-api-orca
+  build_slicer_orca:
+    name: Build slicer-api-orca ${{ matrix.arch }}
+    needs: init
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.init.outputs.slicer_orca) }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Get version
+        id: version
+        shell: bash
+        run: echo "version=$(grep -E '^version: ' slicer-api-orca/config.yaml | awk '{print $2}' | tr -d '"'\''\r')" >> $GITHUB_OUTPUT
+      - name: Build image
+        uses: home-assistant/builder/actions/build-image@master
+        with:
+          arch: ${{ matrix.arch }}
+          context: slicer-api-orca
+          container-registry-password: ${{ secrets.GITHUB_TOKEN }}
+          image: ${{ matrix.image }}
+          image-tags: |
+            ${{ steps.version.outputs.version }}
+            latest
+          push: "true"
+          version: ${{ steps.version.outputs.version }}
+
+  manifest_slicer_orca:
+    name: Publish slicer-api-orca manifest
+    needs: [init, build_slicer_orca]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Get version
+        id: version
+        shell: bash
+        run: echo "version=$(grep -E '^version: ' slicer-api-orca/config.yaml | awk '{print $2}' | tr -d '"'\''\r')" >> $GITHUB_OUTPUT
+      - name: Publish manifest
+        uses: home-assistant/builder/actions/publish-multi-arch-manifest@master
+        with:
+          architectures: '["aarch64", "amd64"]'
+          container-registry-password: ${{ secrets.GITHUB_TOKEN }}
+          image-name: slicer-api-orca
+          image-tags: |
+            ${{ steps.version.outputs.version }}
+            latest

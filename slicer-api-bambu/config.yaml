@@ -1,8 +1,8 @@
-name: "Bambuddy Slicer API (Bambu) (DEV)"
-version: "02.07.01.62.0-0"
+name: "Bambu Studio API (Bambuddy) (DEV)"
+version: "02.07.01.62.1"
 slug: bambuddy_bambu_studio_api_dev
 stage: experimental
-description: "(DEV) A headless Bambu Studio API sidecar container for Bambuddy Auto-Slicing."
+description: "(DEV) A headless Bambu Studio API sidecar container for cloud-free slicing in Bambuddy."
 url: "https://github.com/connormxy/homeassistant-addon-bambuddy#dev"
 arch:
   - amd64
