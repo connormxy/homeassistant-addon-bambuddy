@@ -5,11 +5,17 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+  packages: write
+  id-token: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
     name: Build ${{ matrix.addon }} for ${{ matrix.arch }}
     strategy:
+      fail-fast: false
       matrix:
         addon: ["bambuddy", "obico-ml-api", "slicer-api-bambu", "slicer-api-orca"]
         arch: ["aarch64", "amd64"]
@@ -20,18 +26,25 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+        
+      - name: Get Add-on Version
+        id: version
+        shell: bash
+        run: |
+          VERSION=$(grep -E '^version: ' ${{ matrix.addon }}/config.yaml | awk '{print $2}' | tr -d '"'\''\r')
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
           
-      - name: Build add-on
-        uses: home-assistant/builder@master
+      - name: Build and Push
+        uses: home-assistant/builder/actions/build-image@master
         with:
-          args: |
-            --${{ matrix.arch }} \
-            --target ${{ matrix.addon }} \
-            --image ghcr.io/${{ github.repository_owner }}/${{ matrix.addon }}-{arch} \
-            --docker-hub ghcr.io
+          arch: ${{ matrix.arch }}
+          context: ${{ matrix.addon }}
+          container-registry-password: ${{ secrets.GITHUB_TOKEN }}
+          image: ghcr.io/${{ github.repository_owner }}/${{ matrix.addon }}-${{ matrix.arch }}
+          image-tags: |
+            ${{ steps.version.outputs.version }}
+            latest
+          push: "true"
+          version: ${{ steps.version.outputs.version }}
