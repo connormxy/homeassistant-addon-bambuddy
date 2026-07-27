@@ -9,6 +9,10 @@ debug=$(bashio::config 'debug')
 SLUG=$(bashio::addon.slug || echo "bambuddy")
 if [[ "${SLUG}" == *"dev"* ]]; then
     SHARE_DIR="/share/bambuddy-dev"
+    if [ ! -d "${SHARE_DIR}" ] && [ -d "/share/bambuddy" ] && [ -d "/config/data" ]; then
+        bashio::log.info "Dev environment update detected. Copying existing data from /share/bambuddy to ${SHARE_DIR}..."
+        cp -r /share/bambuddy "${SHARE_DIR}"
+    fi
 else
     SHARE_DIR="/share/bambuddy"
 fi
@@ -166,4 +170,4 @@ export HA_URL="http://supervisor/core"
 export HA_TOKEN="${SUPERVISOR_TOKEN}"
 
 bashio::log.info 'Start Bambuddy ...'
-uvicorn backend.app.main:app --host 0.0.0.0 --port 8000 --loop asyncio
+exec uvicorn backend.app.main:app --host 0.0.0.0 --port 8000 --loop asyncio

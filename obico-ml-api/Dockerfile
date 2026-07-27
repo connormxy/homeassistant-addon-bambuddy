@@ -31,72 +31,7 @@ ENV \
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-# Install base system
-ARG BUILD_ARCH
-ARG BASHIO_VERSION="v0.16.2"
-ARG S6_OVERLAY_VERSION="3.2.0.0"
-ARG TEMPIO_VERSION="2021.09.0"
-RUN \
-    apt-get update \
-    \
-    && apt-get install -y --no-install-recommends \
-        ca-certificates \
-        curl \
-        jq \
-        tzdata \
-        xz-utils \
-    \
-    && S6_ARCH="${BUILD_ARCH}" \
-    && if [ "${BUILD_ARCH}" = "i386" ]; then S6_ARCH="i686"; \
-    elif [ "${BUILD_ARCH}" = "amd64" ]; then S6_ARCH="x86_64"; \
-    elif [ "${BUILD_ARCH}" = "armv7" ]; then S6_ARCH="arm"; fi \
-    \
-    && curl -L -s "https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-noarch.tar.xz" \
-        | tar -C / -Jxpf - \
-    \
-    && curl -L -s "https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-${S6_ARCH}.tar.xz" \
-        | tar -C / -Jxpf - \
-    \
-    && curl -L -s "https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-symlinks-noarch.tar.xz" \
-        | tar -C / -Jxpf - \
-    \
-    && curl -L -s "https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-symlinks-arch.tar.xz" \
-        | tar -C / -Jxpf - \
-    \
-    && mkdir -p /etc/fix-attrs.d \
-    && mkdir -p /etc/services.d \
-    \
-    && curl -J -L -o /tmp/bashio.tar.gz \
-        "https://github.com/hassio-addons/bashio/archive/${BASHIO_VERSION}.tar.gz" \
-    && mkdir /tmp/bashio \
-    && tar zxvf \
-        /tmp/bashio.tar.gz \
-        --strip 1 -C /tmp/bashio \
-    \
-    && mv /tmp/bashio/lib /usr/lib/bashio \
-    && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    \
-    && curl -L -s -o /usr/bin/tempio \
-        "https://github.com/home-assistant/tempio/releases/download/${TEMPIO_VERSION}/tempio_${BUILD_ARCH}" \
-    && chmod a+x /usr/bin/tempio \
-    \
-    && apt-get purge -y --auto-remove \
-        xz-utils \
-    && apt-get clean \
-    && rm -fr \
-        /tmp/* \
-        /var/{cache,log}/* \
-        /var/lib/apt/lists/*
-
-# Copy root filesystem
-COPY rootfs /
-
-# Copy s6-overlay adjustments
-COPY s6-overlay /package/admin/s6-overlay-${S6_OVERLAY_VERSION}/
-RUN chmod -R a+x /package/admin/s6-overlay-${S6_OVERLAY_VERSION}/
-
-# Entrypoint & CMD
-ENTRYPOINT [ "/init" ]
+# Remove s6-overlay, bashio, and tempio installation
 
 # Build arugments
 ARG BUILD_DATE
@@ -144,3 +79,7 @@ RUN echo 'Downloading the latest failure detection AI model in Darknet format...
 RUN wget -O model/model-weights.darknet $(cat model/model-weights.darknet.url | tr -d '\r')
 RUN echo 'Downloading the latest failure detection AI model in ONNX format...'
 RUN wget -O model/model-weights.onnx $(cat model/model-weights.onnx.url | tr -d '\r')
+
+# Copy entrypoint
+COPY entrypoint.py /app/entrypoint.py
+CMD ["python3", "/app/entrypoint.py"]

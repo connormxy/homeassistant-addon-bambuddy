@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.4.2.1] - 2026-07-27
+- **Modernization**: Stripped legacy s6-overlay for a leaner, direct Python execution environment.
+- **Internal**: Implemented direct configuration loading from Supervisor's `options.json`.
+
 ## [1.4.2] - 2026-06-10
 - **Fix**: The `lib` directory was missing from the repository because it was excluded by the root `.gitignore`. It has now been force-added, allowing the Python server to start successfully.
 

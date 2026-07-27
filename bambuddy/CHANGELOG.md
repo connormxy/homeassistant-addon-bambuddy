@@ -4,6 +4,13 @@
 
 All notable changes to the App will be documented in this file.
 
+## [1.2.5] - 2026-07-27
+
+- **Upstream Bump**: Updated base Bambuddy image to `1.2.5` to bring in stability improvements and critical UI/UX bug fixes.
+- **Debian Migration**: Moved from Alpine to Debian Bookworm, permanently resolving OpenCV-related memory exhaustion and compilation crashes.
+- **Modernization**: Transitioned s6-overlay to v3 and implemented graceful shutdowns via `exec uvicorn`.
+- **Fix**: Re-calculated and updated Python patch offsets for 1.2.5 codebase.
+
 ## [0.2.4.8.1] - 2026-07-02
 
 - **Fix**: Updated `obico_bounding_box.patch` to correctly apply to `obico_actions.py` and `obico_detection.py` resolving Docker build failure when pulling upstream changes.

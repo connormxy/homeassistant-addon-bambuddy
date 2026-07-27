@@ -1,5 +1,10 @@
 # Changelog
 
+## [02.07.01.62] - 2026-07-27
+- **Source Build**: Transitioned the build pipeline to compile natively from the upstream source repository. 
+- **Dynamic Download**: Re-engineered the Dockerfile to dynamically fetch the latest AppImage via the GitHub API, mitigating issues with opaque timestamps in filenames.
+- **Debian Migration**: Moved base image to Debian Bookworm.
+
 ## 02.07.01.57.2
 - Added native healthchecks to accurately reflect container startup state
 
