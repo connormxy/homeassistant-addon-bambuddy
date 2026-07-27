@@ -1,7 +1,8 @@
 # Changelog
 
-## [1.4.2.2] - 2026-07-27
+## [1.4.2.3] - 2026-07-27
 
+- **Fix**: Fixed HAOS 404 installation errors by explicitly linking the new multi-arch image names.
 - **Docker Containers**: Transitioned the release pipeline to use GitHub Actions and GHCR using Home Assistant's newest guidance for Docker builds. The add-on is now distributed as a pre-built Docker image, reducing local installation time and storage requirements.
 - **Modernization**: Stripped legacy s6-overlay for a leaner, direct Python execution environment.
 - **Internal**: Implemented direct configuration loading from Supervisor's `options.json`.

@@ -4,8 +4,9 @@
 
 All notable changes to the App will be documented in this file.
 
-## [1.2.5.1] - 2026-07-27
+## [1.2.5.2] - 2026-07-27
 
+- **Fix**: Fixed HAOS 404 installation errors by explicitly linking the new multi-arch image names.
 - **Upstream Bump**: Updated base Bambuddy image to `1.2.5`. Highlights from upstream include:
   - **Auto Bed Leveling/Flow Calibration**: Now supports "Auto" mode matching Bambu Studio exactly.
   - **Live Virtual Printer Progress**: Full live print progress is now sent to Bambu Studio / OrcaSlicer for Virtual Printers.
