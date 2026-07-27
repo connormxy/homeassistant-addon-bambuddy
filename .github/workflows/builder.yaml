@@ -127,6 +127,7 @@ jobs:
             latest
           push: "true"
           version: ${{ steps.version.outputs.version }}
+          cache-image-tag: "bypass-cache"
 
   manifest_obico:
     name: Publish obico-ml-api manifest
