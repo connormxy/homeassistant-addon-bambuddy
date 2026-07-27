@@ -1,4 +1,4 @@
-﻿diff --git a/backend/app/services/obico_actions.py b/backend/app/services/obico_actions.py
+diff --git a/backend/app/services/obico_actions.py b/backend/app/services/obico_actions.py
 index aaea5ed5..ef4d61b5 100644
 --- a/backend/app/services/obico_actions.py
 +++ b/backend/app/services/obico_actions.py
@@ -69,8 +69,8 @@ index 44ed6f3d..639e533f 100644
 -        external_url = settings.get("external_url") or ""
 -        if not external_url:
 -            self._last_error = (
--                "external_url setting is empty ΓÇö Obico's ML API needs a reachable URL to fetch the snapshot from. "
--                "Set Settings ΓåÆ General ΓåÆ External URL."
+-                "external_url setting is empty — Obico's ML API needs a reachable URL to fetch the snapshot from. "
+-                "Set Settings → General → External URL."
 -            )
 +        ml_url_base = settings.get("ml_url", "").rstrip("/")
 +        if not ml_url_base:
@@ -114,8 +114,8 @@ index 44ed6f3d..639e533f 100644
 +            external_url = settings.get("external_url") or ""
 +            if not external_url:
 +                self._last_error = (
-+                    "external_url setting is empty ΓÇö Obico's ML API needs a reachable URL to fetch the snapshot from. "
-+                    "Set Settings ΓåÆ General ΓåÆ External URL."
++                    "external_url setting is empty — Obico's ML API needs a reachable URL to fetch the snapshot from. "
++                    "Set Settings → General → External URL."
 +                )
 +                logger.warning(self._last_error)
 +                return
@@ -170,4 +170,4 @@ index 44ed6f3d..639e533f 100644
 +
      def get_status(self, sensitivity: str = "medium") -> dict:
          # Report the thresholds for the configured sensitivity, not a hardcoded
-         # "medium" ΓÇö otherwise the Status panel always shows the medium row
+         # "medium" — otherwise the Status panel always shows the medium row
