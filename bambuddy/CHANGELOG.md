@@ -12,7 +12,7 @@ All notable changes to the App will be documented in this file.
   - **G-code Injection**: Per-VP toggle for start/end G-code snippets.
   - **Fixes**: Fixed finish photo capturing a dropped bed, various Virtual Printer connection bugs, and AMS slot UI glitches.
   - For full details on all upstream features, check out the [Upstream Bambuddy Changelog](https://github.com/maziggy/bambuddy/blob/main/CHANGELOG.md) and [Bambuddy README](https://github.com/maziggy/bambuddy).
-- **Debian Migration & Python 3.13**: Migrated the base OS from Alpine to Debian Bookworm, unlocking pre-compiled Python wheels. This allowed us to max out the runtime to **Python 3.13** (from 3.11) and permanently resolved all OpenCV-related memory exhaustion and compilation crashes.
+- **Debian Migration & Python 3.11**: Migrated the base OS from Alpine to Debian Bookworm, unlocking pre-compiled Python wheels. This allowed us to lock the runtime to the extremely stable **Python 3.11** and permanently resolved all OpenCV-related memory exhaustion and compilation crashes.
 - **Modernization**: Transitioned s6-overlay to v3 and implemented graceful shutdowns via `exec uvicorn`.
 - **Fix**: Re-calculated and updated custom Python patch offsets for the 1.2.5 codebase.
 

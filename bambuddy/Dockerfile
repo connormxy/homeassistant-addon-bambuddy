@@ -1,7 +1,7 @@
 # https://developers.home-assistant.io/docs/add-ons/configuration#add-on-dockerfile
 ARG BAMBUDDY_VERSION="1.2.5"
 ARG BUILD_ARCH
-ARG BUILD_FROM="ghcr.io/home-assistant/${BUILD_ARCH}-base-python:3.13-bookworm"
+ARG BUILD_FROM="ghcr.io/home-assistant/${BUILD_ARCH}-base-debian:bookworm"
 
 FROM ghcr.io/maziggy/bambuddy:${BAMBUDDY_VERSION} AS builder
 FROM $BUILD_FROM
@@ -16,6 +16,9 @@ WORKDIR /app
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
+  python3 \
+  python3-pip \
+  python3-venv \
   build-essential \
   curl \
   ffmpeg \
@@ -29,9 +32,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Install Python dependencies with cache mount
 COPY --from=builder /app/requirements.txt ./
 RUN --mount=type=cache,target=/root/.cache/pip \
-  pip install --root-user-action=ignore --upgrade pip \
+  pip install --root-user-action=ignore --break-system-packages --upgrade pip \
   && echo "numpy<2" > /tmp/constraints.txt \
-  && pip install --root-user-action=ignore \
+  && pip install --root-user-action=ignore --break-system-packages \
   --prefer-binary \
   -c /tmp/constraints.txt \
   -r requirements.txt
