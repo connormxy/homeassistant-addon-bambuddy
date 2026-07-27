@@ -44,6 +44,9 @@ for config in configs:
         # Remove experimental stage
         content = content.replace('stage: experimental\n', '')
         
+        # Strip trailing modifiers like -0 or -dev from the version string
+        content = re.sub(r'^(version:\s*".*?)-.*?"', r'\1"', content, flags=re.MULTILINE)
+        
         with open(config, 'w', encoding='utf-8') as f:
             f.write(content)
 
