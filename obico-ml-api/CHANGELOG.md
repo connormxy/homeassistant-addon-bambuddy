@@ -1,6 +1,8 @@
 # Changelog
 
 ## [1.4.2.1] - 2026-07-27
+
+- **Docker Containers**: Transitioned the release pipeline to use GitHub Actions and GHCR. The add-on is now distributed as a pre-built Docker image, reducing local installation time and storage requirements.
 - **Modernization**: Stripped legacy s6-overlay for a leaner, direct Python execution environment.
 - **Internal**: Implemented direct configuration loading from Supervisor's `options.json`.
 
