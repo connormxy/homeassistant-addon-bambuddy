@@ -42,7 +42,7 @@ for config in configs:
         content = content.replace('#dev', '')
         
         # Remove experimental stage
-        content = content.replace('stage: experimental\n', '')
+        content = re.sub(r'^stage:\s*experimental[\r\n]*', '', content, flags=re.MULTILINE)
         
         # Strip trailing modifiers like -0 or -dev from the version string
         content = re.sub(r'^(version:\s*".*?)-.*?"', r'\1"', content, flags=re.MULTILINE)
