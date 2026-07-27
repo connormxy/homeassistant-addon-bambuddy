@@ -1,9 +1,8 @@
-name: "OrcaSlicer API (Bambuddy) (DEV)"
+name: "OrcaSlicer API (Bambuddy)"
 version: "2.4.2.2"
-slug: bambuddy_orcaslicer_api_dev
-stage: experimental
-description: "(DEV) A headless OrcaSlicer sidecar container for cloud-independent slicing in Bambuddy."
-url: "https://github.com/connormxy/homeassistant-addon-bambuddy#dev"
+slug: bambuddy_orcaslicer_api
+description: "A headless OrcaSlicer sidecar container for cloud-independent slicing in Bambuddy."
+url: "https://github.com/connormxy/homeassistant-addon-bambuddy"
 image: "ghcr.io/connormxy/{arch}-slicer-api-orca"
 arch:
   - aarch64
