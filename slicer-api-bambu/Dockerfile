@@ -30,18 +30,12 @@ RUN if [ "$TARGETARCH" = "arm64" ]; then \
 RUN npm ci
 RUN npm run build
 
-FROM ubuntu:22.04
+FROM node:22-bookworm-slim
 
 RUN apt-get update \
     && apt-get upgrade -y \
     && apt-get install -y --no-install-recommends \
-       curl ca-certificates gnupg \
-    && mkdir -p /etc/apt/keyrings \
-    && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg \
-    && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_22.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list \
-    && apt-get update \
-    && apt-get install -y --no-install-recommends \
-       nodejs \
+       curl ca-certificates \
        libgl1 libgl1-mesa-dri libegl1 libopengl0 libglu1-mesa libosmesa6 \
        libsm6 libice6 libmspack0 libsoup2.4-1 \
        libgtk-3-0 \
