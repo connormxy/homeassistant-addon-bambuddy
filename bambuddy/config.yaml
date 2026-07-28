@@ -2,8 +2,9 @@
 name: "Bambuddy (DEV)"
 version: "1.2.5.5"
 slug: bambuddy-dev
-description: "Bambuddy is an offline-capable, standalone companion app for Bambu Lab 3D printers."
-url: "https://github.com/connormxy/homeassistant-addon-bambuddy"
+stage: experimental
+description: "Bambuddy is an offline-capable, standalone companion app for Bambu Lab 3D printers. (DEV)"
+url: "https://github.com/connormxy/homeassistant-addon-bambuddy#dev"
 image: "ghcr.io/connormxy/bambuddy"
 arch:
   - aarch64
