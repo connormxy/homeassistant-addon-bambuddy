@@ -1,4 +1,4 @@
-name: "OrcaSlicer API (Bambuddy) (DEV)"
+name: "Bambuddy Slicer API (OrcaSlicer) (DEV)"
 version: "2.4.2.5"
 slug: bambuddy_orca_slicer_api_dev
 stage: experimental
