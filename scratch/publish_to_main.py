@@ -50,7 +50,7 @@ for config in configs:
         # Inject the pre-built GHCR image key
         folder_name = config.split('/')[0]
         if 'image:' not in content:
-            content += f'\nimage: "ghcr.io/connormxy/{folder_name}-{{arch}}"\n'
+            content += f'\nimage: "ghcr.io/connormxy/{folder_name}"\n'
         
         with open(config, 'w', encoding='utf-8') as f:
             f.write(content)

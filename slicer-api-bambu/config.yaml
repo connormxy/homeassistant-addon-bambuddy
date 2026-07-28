@@ -3,7 +3,7 @@ version: "02.07.01.62.4"
 slug: bambuddy_bambu_studio_api
 description: "A headless Bambu Studio sidecar container for cloud-independent slicing in Bambuddy."
 url: "https://github.com/connormxy/homeassistant-addon-bambuddy"
-image: "ghcr.io/connormxy/slicer-api-bambu-{arch}"
+image: "ghcr.io/connormxy/slicer-api-bambu"
 arch:
   - amd64
 startup: services
