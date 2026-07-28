@@ -80,6 +80,7 @@ if os.path.exists(readme_path):
     # Clean installation badges
     content = content.replace('**Dev Branch:** [![Open your', '[![Open your')
     content = content.replace('homeassistant-addon-bambuddy#dev)', 'homeassistant-addon-bambuddy)')
+    content = content.replace('homeassistant-addon-bambuddy%23dev)', 'homeassistant-addon-bambuddy)')
     
     with open(readme_path, 'w', encoding='utf-8') as f:
         f.write(content)

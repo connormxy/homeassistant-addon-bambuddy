@@ -1,3 +1,5 @@
+# Dev Branch
+
 <p align="center">
   <img src="https://github.com/connormxy/homeassistant-addon-bambuddy/blob/main/bambuddy/logo.png?raw=true" alt="Bambuddy Logo" width="300">
 </p>
@@ -16,7 +18,7 @@ A self-hosted print archive and management system for Bambu Lab 3D printers, wit
 [armv7-shield]: https://img.shields.io/badge/armv7-yes-green.svg
 [i386-shield]: https://img.shields.io/badge/i386-yes-green.svg
 
-[![Open your Home Assistant instance and show the add app repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Fconnormxy%2Fhomeassistant-addon-bambuddy)
+**Dev Branch:** [![Open your Home Assistant instance and show the add app repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Fconnormxy%2Fhomeassistant-addon-bambuddy%23dev)
 
 ## ⚠️ Breaking Changes in v0.2.4.5
 If you are upgrading from a previous version, please read the specific breaking changes in the sub-app documentation:
@@ -84,7 +86,7 @@ Bambuddy is accessed directly via its web UI at `http://<your-ha-ip>:8000` — i
 ---
 
 ## Installation
-[![Open your Home Assistant instance and show the add app repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Fconnormxy%2Fhomeassistant-addon-bambuddy#main)
+**Dev Branch:** [![Open your Home Assistant instance and show the add app repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Fconnormxy%2Fhomeassistant-addon-bambuddy%23dev)
 
 1. Add this repository URL to your Home Assistant add-on store. Click the above link, or:
 In Home Assistant, open `⚙️ Settings` > `🧩 Apps` > `🏠+ Install App` > `… Menu` > `Repositories` > `➕ Add` and enter:
