@@ -23,4 +23,3 @@ healthcheck:
   timeout: 5s
   retries: 3
 
-image: "ghcr.io/connormxy/slicer-api-orca-{arch}"

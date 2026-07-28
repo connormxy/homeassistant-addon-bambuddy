@@ -38,4 +38,3 @@ host_network: true
 webui: http://[HOST]:[PORT:8000]
 watchdog: http://[HOST]:[PORT:8000]/health
 
-image: "ghcr.io/connormxy/bambuddy-{arch}"

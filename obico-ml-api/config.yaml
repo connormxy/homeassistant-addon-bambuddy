@@ -23,4 +23,3 @@ options:
   draw_bounding_boxes: true
 schema:
   draw_bounding_boxes: bool
-image: "ghcr.io/connormxy/obico-ml-api-{arch}"
