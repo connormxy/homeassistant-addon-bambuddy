@@ -15,10 +15,18 @@ description: Automates the process of graduating experimental `dev` changes into
 
 When requested to push changes to main or release a new stable version, run the following pipeline exactly:
 
-1. **Verify Dev State**
+1. **Verify Version and Changelog Parity**
+   Ensure the versions in all `config.yaml` files are at least numerically incremented above the prior versions on the remote GitHub repository. If not, increment them by `0.0.0.1` or `.1` as appropriate.
+   
+   Confirm with the developer how the `CHANGELOG.md` files should be updated:
+   - **a)** Add a completely new entry for the new version.
+   - **b)** Increment the top heading to match the new version (for squashing hotfixes).
+   - **c)** Add a new version entry but repeat major breaking features if appropriate (during transitions).
+
+2. **Verify Dev State**
    Ensure you are currently on the `dev` branch and the working directory is clean. If there are uncommitted changes, commit and push them to `dev` first.
 
-2. **Execute Pipeline**
+3. **Execute Pipeline**
    Run the following chained command to smoothly transition the code, execute the cleaner script, and publish:
 
    ```bash
