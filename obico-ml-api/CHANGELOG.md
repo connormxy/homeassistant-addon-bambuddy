@@ -1,6 +1,8 @@
 # Changelog
 
-## [1.4.2.5] - 2026-07-27
+## [1.4.2.6] - 2026-07-27
+
+**Notice**: Apologies for recent broken updates during this transition; the new Docker build pipeline issues have been fully resolved, and this update delivers the stable, pre-built containers.
 
 - **Fix**: Fixed HAOS 404 installation errors by explicitly linking the new multi-arch image names.
 - **Docker Containers**: Transitioned the release pipeline to use GitHub Actions and GHCR using Home Assistant's newest guidance for Docker builds. The add-on is now distributed as a pre-built Docker image, reducing local installation time and storage requirements.

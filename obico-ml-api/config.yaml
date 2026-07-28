@@ -1,5 +1,5 @@
 name: "Bambuddy Obico ML API (DEV)"
-version: "1.4.2.5"
+version: "1.4.2.6"
 slug: bambuddy_obico_ml_dev
 stage: experimental
 description: "A headless Obico ML API sidecar container for local AI print-failure detection in Bambuddy. (DEV)"

@@ -1,6 +1,6 @@
 # https://developers.home-assistant.io/docs/add-ons/configuration#add-on-config
 name: "Bambuddy (DEV)"
-version: "1.2.5.5"
+version: "1.2.5.6"
 slug: bambuddy-dev
 stage: experimental
 description: "Bambuddy is an offline-capable, standalone companion app for Bambu Lab 3D printers. (DEV)"

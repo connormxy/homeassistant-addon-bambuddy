@@ -4,7 +4,9 @@
 
 All notable changes to the App will be documented in this file.
 
-## [1.2.5.5] - 2026-07-27
+## [1.2.5.6] - 2026-07-27
+
+**Notice**: Apologies for recent broken updates during this transition; the new Docker build pipeline issues have been fully resolved, and this update delivers the stable, pre-built containers.
 
 - **Fix**: Fixed HAOS 404 installation errors by explicitly linking the new multi-arch image names.
 - **Upstream Bump**: Updated base Bambuddy image to `1.2.5`. Highlights from upstream include:
