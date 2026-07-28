@@ -1,7 +1,14 @@
-FROM node:22-bookworm AS build
+FROM ubuntu:24.04 AS build
 
 ARG ORCA_VERSION=2.4.2
 ARG TARGETARCH
+
+# Install build dependencies and Node.js 22
+RUN apt-get update && apt-get install -y \
+    git curl ca-certificates gnupg \
+    && curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
+    && apt-get install -y nodejs \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
@@ -29,17 +36,20 @@ RUN npm ci
 
 RUN npm run build
 
-FROM node:22-bookworm-slim
+FROM ubuntu:24.04
 
+# Install runtime dependencies and Node.js 22
 RUN apt-get update \
 	&& apt-get upgrade -y \
 	&& apt-get install -y --no-install-recommends \
-	curl ca-certificates \
+	curl ca-certificates gnupg \
 	libgl1 libgl1-mesa-dri libegl1 libopengl0 libglu1-mesa \
 	libsm6 libice6 libmspack0 \
 	libgtk-3-0 \
 	libgstreamer1.0-0 libgstreamer-plugins-base1.0-0 \
 	libwebkit2gtk-4.1-0 \
+    && curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
+    && apt-get install -y nodejs \
 	&& update-ca-certificates \
 	&& rm -rf /var/lib/apt/lists/*
 

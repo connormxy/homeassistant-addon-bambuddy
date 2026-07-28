@@ -1,5 +1,9 @@
 # Changelog
 
+## [2.4.2.7] - 2026-07-28
+
+- **Fix**: Migrated base image from Debian Bookworm to Ubuntu 24.04. This is required because upstream OrcaSlicer v2.4.2 AppImages are now compiled strictly on Ubuntu 24.04, demanding `glibc 2.39`. This resolves the immediate `GLIBC_2.38` and `GLIBCXX_3.4.32 not found` crashes.
+
 ## [2.4.2.6] - 2026-07-27
 
 **Notice**: Apologies for recent broken updates during this transition; the new Docker build pipeline issues have been fully resolved, and this update delivers the stable, pre-built containers.
@@ -7,7 +11,7 @@
 - **Fix**: Fixed HAOS 404 installation errors by explicitly linking the new multi-arch image names.
 - **Docker Containers**: Transitioned the release pipeline to use GitHub Actions and GHCR using Home Assistant's newest guidance for Docker builds. The add-on is now distributed as a pre-built Docker image, reducing local installation time and storage requirements.
 - **Source Build**: Transitioned the build pipeline to compile natively from the upstream source repository, ensuring better long-term reliability and flexibility.
-- **Debian Migration**: Moved base image to Debian Bookworm to natively resolve `libwebkit2gtk-4.1-0` dependencies.
+- **Base Image**: Rebased the Docker image from Alpine to Debian Bookworm (`node:22-bookworm-slim`) to provide `glibc` support required by modern OrcaSlicer AppImages.
 
 ## 2.3.2.2
 - Added native healthchecks to accurately reflect container startup state
