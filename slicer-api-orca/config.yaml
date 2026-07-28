@@ -4,7 +4,6 @@ slug: bambuddy_orca_slicer_api_dev
 stage: experimental
 description: "A headless OrcaSlicer sidecar container for cloud-independent slicing in Bambuddy. (DEV)"
 url: "https://github.com/connormxy/homeassistant-addon-bambuddy#dev"
-image: "ghcr.io/connormxy/slicer-api-orca"
 arch:
   - aarch64
   - amd64
