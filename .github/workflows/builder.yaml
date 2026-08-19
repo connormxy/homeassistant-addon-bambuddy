@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - dev
 
 permissions:
   contents: read
@@ -25,28 +26,28 @@ jobs:
         uses: home-assistant/builder/actions/prepare-multi-arch-matrix@master
         with:
           architectures: '["aarch64", "amd64"]'
-          image-name: bambuddy
+          image-name: ${{ github.ref_name == 'dev' && 'bambuddy-dev' || 'bambuddy' }}
 
       - name: Get obico matrix
         id: obico
         uses: home-assistant/builder/actions/prepare-multi-arch-matrix@master
         with:
           architectures: '["aarch64", "amd64"]'
-          image-name: obico-ml-api
+          image-name: ${{ github.ref_name == 'dev' && 'obico-ml-api-dev' || 'obico-ml-api' }}
 
       - name: Get slicer_bambu matrix
         id: slicer_bambu
         uses: home-assistant/builder/actions/prepare-multi-arch-matrix@master
         with:
           architectures: '["amd64"]'
-          image-name: slicer-api-bambu
+          image-name: ${{ github.ref_name == 'dev' && 'slicer-api-bambu-dev' || 'slicer-api-bambu' }}
 
       - name: Get slicer_orca matrix
         id: slicer_orca
         uses: home-assistant/builder/actions/prepare-multi-arch-matrix@master
         with:
           architectures: '["aarch64", "amd64"]'
-          image-name: slicer-api-orca
+          image-name: ${{ github.ref_name == 'dev' && 'slicer-api-orca-dev' || 'slicer-api-orca' }}
 
   # bambuddy
   build_bambuddy:
@@ -73,7 +74,7 @@ jobs:
           image: ${{ matrix.image }}
           image-tags: |
             ${{ steps.version.outputs.version }}
-            latest
+            ${{ github.ref_name == 'dev' && 'dev' || 'latest' }}
           push: "true"
           version: ${{ steps.version.outputs.version }}
 
@@ -94,10 +95,10 @@ jobs:
         with:
           architectures: '["aarch64", "amd64"]'
           container-registry-password: ${{ secrets.GITHUB_TOKEN }}
-          image-name: bambuddy
+          image-name: ${{ github.ref_name == 'dev' && 'bambuddy-dev' || 'bambuddy' }}
           image-tags: |
             ${{ steps.version.outputs.version }}
-            latest
+            ${{ github.ref_name == 'dev' && 'dev' || 'latest' }}
 
   # obico-ml-api
   build_obico:
@@ -124,7 +125,7 @@ jobs:
           image: ${{ matrix.image }}
           image-tags: |
             ${{ steps.version.outputs.version }}
-            latest
+            ${{ github.ref_name == 'dev' && 'dev' || 'latest' }}
           push: "true"
           version: ${{ steps.version.outputs.version }}
           cache-image-tag: "bypass-cache"
@@ -147,10 +148,10 @@ jobs:
         with:
           architectures: '["aarch64", "amd64"]'
           container-registry-password: ${{ secrets.GITHUB_TOKEN }}
-          image-name: obico-ml-api
+          image-name: ${{ github.ref_name == 'dev' && 'obico-ml-api-dev' || 'obico-ml-api' }}
           image-tags: |
             ${{ steps.version.outputs.version }}
-            latest
+            ${{ github.ref_name == 'dev' && 'dev' || 'latest' }}
 
   # slicer-api-bambu
   build_slicer_bambu:
@@ -177,7 +178,7 @@ jobs:
           image: ${{ matrix.image }}
           image-tags: |
             ${{ steps.version.outputs.version }}
-            latest
+            ${{ github.ref_name == 'dev' && 'dev' || 'latest' }}
           push: "true"
           version: ${{ steps.version.outputs.version }}
 
@@ -198,10 +199,10 @@ jobs:
         with:
           architectures: '["amd64"]'
           container-registry-password: ${{ secrets.GITHUB_TOKEN }}
-          image-name: slicer-api-bambu
+          image-name: ${{ github.ref_name == 'dev' && 'slicer-api-bambu-dev' || 'slicer-api-bambu' }}
           image-tags: |
             ${{ steps.version.outputs.version }}
-            latest
+            ${{ github.ref_name == 'dev' && 'dev' || 'latest' }}
 
   # slicer-api-orca
   build_slicer_orca:
@@ -228,7 +229,7 @@ jobs:
           image: ${{ matrix.image }}
           image-tags: |
             ${{ steps.version.outputs.version }}
-            latest
+            ${{ github.ref_name == 'dev' && 'dev' || 'latest' }}
           push: "true"
           version: ${{ steps.version.outputs.version }}
 
@@ -249,7 +250,7 @@ jobs:
         with:
           architectures: '["aarch64", "amd64"]'
           container-registry-password: ${{ secrets.GITHUB_TOKEN }}
-          image-name: slicer-api-orca
+          image-name: ${{ github.ref_name == 'dev' && 'slicer-api-orca-dev' || 'slicer-api-orca' }}
           image-tags: |
             ${{ steps.version.outputs.version }}
-            latest
+            ${{ github.ref_name == 'dev' && 'dev' || 'latest' }}

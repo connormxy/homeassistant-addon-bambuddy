@@ -1,6 +1,7 @@
 name: "Bambuddy Obico ML API (DEV)"
-version: "1.4.2.6"
+version: "1.4.2.6-1"
 slug: bambuddy_obico_ml_dev
+image: "ghcr.io/connormxy/obico-ml-api-dev"
 stage: experimental
 description: "A headless Obico ML API sidecar container for local AI print-failure detection in Bambuddy. (DEV)"
 url: "https://github.com/connormxy/homeassistant-addon-bambuddy#dev"

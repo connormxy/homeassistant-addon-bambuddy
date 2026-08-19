@@ -47,9 +47,11 @@ for config in configs:
         # Strip trailing modifiers like -0 or -dev from the version string
         content = re.sub(r'^(version:\s*".*?)-.*?"', r'\1"', content, flags=re.MULTILINE)
         
-        # Inject the pre-built GHCR image key
+        # Transform dev image to release image
         folder_name = config.split('/')[0]
-        if 'image:' not in content:
+        if f'image: "ghcr.io/connormxy/{folder_name}-dev"' in content:
+            content = content.replace(f'image: "ghcr.io/connormxy/{folder_name}-dev"', f'image: "ghcr.io/connormxy/{folder_name}"')
+        elif 'image:' not in content:
             content += f'\nimage: "ghcr.io/connormxy/{folder_name}"\n'
         
         with open(config, 'w', encoding='utf-8') as f:
