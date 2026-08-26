@@ -1,5 +1,5 @@
 name: "Bambuddy Slicer API (OrcaSlicer) (DEV)"
-version: "2.4.2.9-1"
+version: "2.4.2.9-1.1"
 slug: bambuddy_orca_slicer_api_dev
 image: "ghcr.io/connormxy/slicer-api-orca-dev"
 stage: experimental
