@@ -58,7 +58,7 @@ jobs:
       fail-fast: false
       matrix: ${{ fromJSON(needs.init.outputs.bambuddy) }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Get version
         id: version
         shell: bash
@@ -83,7 +83,7 @@ jobs:
     needs: [init, build_bambuddy]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Get version
         id: version
         shell: bash
@@ -109,7 +109,7 @@ jobs:
       fail-fast: false
       matrix: ${{ fromJSON(needs.init.outputs.obico) }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Get version
         id: version
         shell: bash
@@ -136,7 +136,7 @@ jobs:
     needs: [init, build_obico]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Get version
         id: version
         shell: bash
@@ -162,7 +162,7 @@ jobs:
       fail-fast: false
       matrix: ${{ fromJSON(needs.init.outputs.slicer_bambu) }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Get version
         id: version
         shell: bash
@@ -187,7 +187,7 @@ jobs:
     needs: [init, build_slicer_bambu]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Get version
         id: version
         shell: bash
@@ -213,7 +213,7 @@ jobs:
       fail-fast: false
       matrix: ${{ fromJSON(needs.init.outputs.slicer_orca) }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Get version
         id: version
         shell: bash
@@ -238,7 +238,7 @@ jobs:
     needs: [init, build_slicer_orca]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Get version
         id: version
         shell: bash
