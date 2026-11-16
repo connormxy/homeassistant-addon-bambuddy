@@ -1,6 +1,6 @@
 FROM ubuntu:24.04 AS build
 
-ARG ORCA_VERSION=2.4.2
+ARG ORCA_VERSION=2.5.1
 ARG TARGETARCH
 
 # Install build dependencies and Node.js 22
