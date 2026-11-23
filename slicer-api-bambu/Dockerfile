@@ -1,4 +1,4 @@
-FROM node:22-bookworm AS build
+FROM node:26-bookworm AS build
 
 ARG BAMBU_VERSION=02.07.01.62
 ARG TARGETARCH
@@ -30,7 +30,7 @@ RUN if [ "$TARGETARCH" = "arm64" ]; then \
 RUN npm ci
 RUN npm run build
 
-FROM node:22-bookworm-slim
+FROM node:26-bookworm-slim
 
 RUN apt-get update \
     && apt-get upgrade -y \
