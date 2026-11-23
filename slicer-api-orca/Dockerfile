@@ -1,4 +1,4 @@
-FROM ubuntu:24.04 AS build
+FROM ubuntu:26.04 AS build
 
 ARG ORCA_VERSION=2.4.2
 ARG TARGETARCH
@@ -36,7 +36,7 @@ RUN npm ci
 
 RUN npm run build
 
-FROM ubuntu:24.04
+FROM ubuntu:26.04
 
 # Install runtime dependencies and Node.js 22
 RUN apt-get update \
