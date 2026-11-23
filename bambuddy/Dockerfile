@@ -1,5 +1,5 @@
 # https://developers.home-assistant.io/docs/add-ons/configuration#add-on-dockerfile
-ARG BAMBUDDY_VERSION="1.2.5"
+ARG BAMBUDDY_VERSION="v1.3.2"
 ARG BUILD_ARCH=amd64
 ARG BUILD_FROM="ghcr.io/home-assistant/${BUILD_ARCH}-base-debian:bookworm"
 
